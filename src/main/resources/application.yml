@@ -1,0 +1,21 @@
+connection:
+    username: admin
+    remoteAddress: 192.168.1.1 
+
+spring:
+    jpa:
+        database-platform: org.hibernate.dialect.PostgreSQLDialect
+        show-sql: true
+        hibernate:
+            ddl-auto: validate
+    datasource:
+        #platform: postgres
+        #driver-class-name: org.postgresql.Driver
+        url: jdbc:postgresql://192.168.99.100:32770/production
+        username: sylvain
+        password: dubai
+    data:
+        rest:
+            #base-uri:api
+            #basePath:/api
+            #base-path:/api
