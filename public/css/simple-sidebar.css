@@ -96,6 +96,13 @@
     background: none;
 }
 
+.sidebar-nav > .sidebar-category {
+    height: 65px;
+    font-size: 18px;
+    line-height: 60px;
+    color: beige;
+}
+
 @media(min-width:768px) {
     #wrapper {
         padding-left: 250px;

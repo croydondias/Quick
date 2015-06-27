@@ -44,8 +44,7 @@ CREATE TABLE task (
    employee_id BIGINT REFERENCES employee(id),
    name    VARCHAR(128) NOT NULL,
    description    VARCHAR(128) NOT NULL,
-   done			  BOOLEAN DEFAULT FALSE NOT NULL,
-   CONSTRAINT u_project_id_name UNIQUE (project_id, name)
+   done			  BOOLEAN DEFAULT FALSE NOT NULL
 );
 
 insert into employee (first_name, last_name, email, password) VALUES ('Magali', 'Mouquet', 'mm@emiratesreit.com', 'abc123');
@@ -69,19 +68,30 @@ insert into project (category_id, name, description) VALUES (1, 'Office Park', '
 insert into project (category_id, name, description) VALUES (1, 'Indigo 7', 'xxx');
 insert into project (category_id, name, description) VALUES (1, 'GEMS World Academy', 'xxx');
 insert into project (category_id, name, description) VALUES (1, 'Index Tower', 'xxx');
+insert into project (category_id, name, description) VALUES (2, 'IT', 'xxx');
+insert into project (category_id, name, description) VALUES (2, 'Accounting', 'xxx');
+insert into project (category_id, name, description) VALUES (2, 'Marketing', 'xxx');
+insert into project (category_id, name, description) VALUES (2, 'Legal', 'xxx');
+insert into project (category_id, name, description) VALUES (2, 'Backoffice', 'xxx');
 
 insert into task (project_id, employee_id, name, description) VALUES (1, 1, 'Paint walls', 'xxx');
-insert into task (project_id, employee_id, name, description) VALUES (1, 2, 'Lay carpets', 'xxx');
+insert into task (project_id, employee_id, name, description) VALUES (1, 2, 'Lay Indian carpets', 'xxx');
 insert into task (project_id, employee_id, name, description) VALUES (1, 3, 'Put furniture', 'xxx');
 insert into task (project_id, employee_id, name, description) VALUES (1, null, 'Finish marketing', 'xxx');
 insert into task (project_id, employee_id, name, description, done) VALUES (1, 4, 'Hire cleaners', 'xxx', true);
-insert into task (project_id, employee_id, name, description) VALUES (2, 1, 'Paint walls', 'xxx');
-insert into task (project_id, employee_id, name, description) VALUES (2, 2, 'Lay carpets', 'xxx');
+insert into task (project_id, employee_id, name, description) VALUES (2, 1, 'Paint walls Red', 'xxx');
+insert into task (project_id, employee_id, name, description) VALUES (2, 2, 'Lay Egyptian carpets', 'xxx');
 insert into task (project_id, employee_id, name, description) VALUES (2, 3, 'Put furniture', 'xxx');
 insert into task (project_id, employee_id, name, description) VALUES (2, null, 'Finish marketing', 'xxx');
 insert into task (project_id, employee_id, name, description, done) VALUES (2, 4, 'Hire cleaners', 'xxx', true);
 insert into task (project_id, employee_id, name, description) VALUES (3, 1, 'Paint walls', 'xxx');
-insert into task (project_id, employee_id, name, description) VALUES (3, 2, 'Lay carpets', 'xxx');
-insert into task (project_id, employee_id, name, description) VALUES (3, 3, 'Put furniture', 'xxx');
+insert into task (project_id, employee_id, name, description) VALUES (3, 2, 'Stock beer', 'xxx');
+insert into task (project_id, employee_id, name, description) VALUES (3, 3, 'Check light fixtures', 'xxx');
 insert into task (project_id, employee_id, name, description) VALUES (3, null, 'Finish marketing', 'xxx');
 insert into task (project_id, employee_id, name, description, done) VALUES (3, 4, 'Hire cleaners', 'xxx', true);
+
+insert into task (project_id, employee_id, name, description) VALUES (8, 6, 'Develop new website', 'xxx');
+insert into task (project_id, employee_id, name, description) VALUES (8, 6, 'Run batch jobs', 'xxx');
+insert into task (project_id, employee_id, name, description) VALUES (8, 6, 'Develop iOS app', 'xxx');
+insert into task (project_id, employee_id, name, description) VALUES (9, 2, 'Crunch numbers', 'xxx');
+insert into task (project_id, employee_id, name, description) VALUES (9, 2, 'Crunch more numbers', 'xxx');

@@ -1,5 +1,6 @@
 package com.croydon.quick.api;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,7 +13,6 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.croydon.quick.domain.Project;
 import com.croydon.quick.domain.Task;
 import com.croydon.quick.exception.TaskAlreadyExistsException;
 import com.croydon.quick.service.TaskService;
@@ -55,4 +55,15 @@ public class TaskRestController {
 	    return e.getMessage();
 	}
 	
+	@RequestMapping(method = RequestMethod.GET, value = "/findByProjectId/{id}")
+	public List<Task> findByProjectId(@PathVariable String id) {
+		final long projectId = Long.valueOf(id);
+		List<Task> tasks = new ArrayList<>();
+		for (Task task : getAll()) {
+			if (task.getProject_id() == projectId) {
+				tasks.add(task);
+			}
+		}
+		return tasks.isEmpty() ? null : tasks;
+	}
 }
