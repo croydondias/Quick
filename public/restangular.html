@@ -14,22 +14,44 @@
     <p>Tasks</p>
 
     <div ng-controller="mainCtrl">
+    
+    
     <table>
-        <thead>
-            <tr>
-                <th>Title</th>
-                <th>Description</th>
-                <th>Link</th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr ng-repeat="task in tasks">
-                <td>{{task.name}}</td>
-                <td></td>
-                <td><a href="">link</a></td>
-            </tr>
-        </tbody>
-    </table>
+	  <tr ng-repeat="x in employees">
+	    <td>{{ x.id }}</td>
+	    <td>{{ x.firstName }}</td>
+	    <td>{{ x.lastName }}</td>
+	    <td>{{ x.email }}</td>
+	  </tr>
+	</table>
+	
+    <table>
+	  <tr ng-repeat="x in categories">
+	    <td>{{ x.id }}</td>
+	    <td>{{ x.name }}</td>
+	  </tr>
+	</table>
+    
+    <table>
+	  <tr ng-repeat="x in projects">
+	    <td>{{ x.id }}</td>
+	    <td>{{ x.name }}</td>
+	  </tr>
+	</table>
+	
+	<table>
+	  <tr ng-repeat="x in tasks">
+	    <td>{{ x.id }}</td>
+	    <td>{{ x.name }}</td>
+	  </tr>
+	</table>
+    
+       <table>
+	  <tr ng-repeat="x in names">
+	    <td>{{ x.Name }}</td>
+	    <td>{{ x.Country }}</td>
+	  </tr>
+	</table>
     </div>
 
     <script src="js/app.js"></script>

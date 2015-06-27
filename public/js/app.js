@@ -8,21 +8,39 @@ app.config(function(RestangularProvider) {
         // Note that we run everything on the localhost
 });
 
-app.config(function (HateoasInterceptorProvider) {
-    HateoasInterceptorProvider.transformAllResponses();
-});
+//app.config(function (HateoasInterceptorProvider) {
+//    HateoasInterceptorProvider.transformAllResponses();
+//});
 
 // Define the controller
-app.controller('mainCtrl', function($scope, Restangular, $resource) {
-    Restangular.all('task').getList().then(function(result) {
-        $scope.tasks = result;
-        console.log(result);
-    });
-
-    var item = $resource("/api/task").get(null, function () {
-    console.log("Here's a related $resource object: ", item);
-    console.log(item._embedded.task[0])
-    });
+app.controller('mainCtrl', function($scope, Restangular, $resource, $http) {
+//    Restangular.all('task').getList().then(function(result) {
+//        $scope.tasks = result;
+//        console.log('tasks ->' + $scope.tasks);
+//    });
+    
+    $scope.resource = Restangular.all('employee');
+	
+	$scope.resource.get(1).then(function(response){
+			//console.log(response);
+	});
+	
+	$scope.resource.doGET().then(function(response){
+		//console.log(response);
+	});
+    
+    $scope.employees = Restangular.all('employee').doGET().$object;
+    $scope.categories = Restangular.all('category').doGET().$object;
+    $scope.projects = Restangular.all('project').doGET().$object;
+    $scope.tasks = Restangular.all('task').doGET().$object;
+    
+//    $http.get("http://www.w3schools.com/angular/customers.php")
+//    .success(function (response) {
+//    	//console.log(response);
+//    	//console.log(response.records);
+//    	$scope.names = response.records;
+//    });
+    
 });
 
 // Standardize data format (extract from meta-data where needed)
