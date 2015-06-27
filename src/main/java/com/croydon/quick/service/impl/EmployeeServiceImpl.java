@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 import com.croydon.quick.domain.Employee;
 import com.croydon.quick.domain.EmployeeRepository;
 import com.croydon.quick.exception.EmployeeAlreadyExistsException;
+import com.croydon.quick.exception.EmployeeDoesntExistException;
 import com.croydon.quick.service.EmployeeService;
 
 @Service
@@ -30,11 +31,22 @@ public class EmployeeServiceImpl implements EmployeeService {
 
 	@Override
 	@Transactional
-	public Employee save(Employee employee) throws EmployeeAlreadyExistsException {
+	public Employee create(Employee employee) throws EmployeeAlreadyExistsException {
 		Employee existing = employeeRepository.findOne(employee.getId());
 	    if (existing != null) {
 	        throw new EmployeeAlreadyExistsException(
 	                String.format("There already exists an employee with id=%s", employee.getId()));
+	    }
+	    return employeeRepository.save(employee);
+	}
+	
+	@Override
+	@Transactional
+	public Employee save(Employee employee) throws EmployeeDoesntExistException {
+		Employee existing = employeeRepository.findOne(employee.getId());
+	    if (existing == null) {
+	        throw new EmployeeDoesntExistException(
+	                String.format("Employee id=%s does not exist", employee.getId()));
 	    }
 	    return employeeRepository.save(employee);
 	}

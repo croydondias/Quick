@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.croydon.quick.domain.Project;
 import com.croydon.quick.exception.ProjectAlreadyExistsException;
+import com.croydon.quick.exception.ProjectDoesntExistException;
 import com.croydon.quick.service.ProjectService;
 
 @RestController
@@ -34,8 +35,8 @@ public class ProjectRestController {
 	}
 
 	@RequestMapping(method = RequestMethod.POST)
-	public Project create(@RequestBody Project project) throws Exception {
-		return projectService.save(project);
+	public Project create(@RequestBody Project project) throws ProjectAlreadyExistsException {
+		return projectService.create(project);
 	}
 
 	@RequestMapping(method = RequestMethod.DELETE, value = "{id}")
@@ -44,14 +45,23 @@ public class ProjectRestController {
 	}
 
 	@RequestMapping(method = RequestMethod.PUT, value = "{id}")
-	public Project update(@PathVariable String id, @RequestBody Project project) {
-		return null;
+	public Project update(@PathVariable String id, @RequestBody Project project) throws ProjectDoesntExistException {
+		Project update = projectService.findOne(Long.valueOf(id));
+		update.setName(project.getName());
+		update.setDescription(project.getDescription());
+		update.setCategory_id(project.getCategory_id());
+		return projectService.save(update);
 	}
 	
 	@ExceptionHandler
 	@ResponseStatus(value=HttpStatus.CONFLICT)
-	public String handleUserAlreadyExistsException(ProjectAlreadyExistsException e) {
+	public String handleProjectAlreadyExistsException(ProjectAlreadyExistsException e) {
 	    return e.getMessage();
 	}
 	
+	@ExceptionHandler
+	@ResponseStatus(value=HttpStatus.CONFLICT)
+	public String handleProjectDoesntExistException(ProjectDoesntExistException e) {
+	    return e.getMessage();
+	}
 }

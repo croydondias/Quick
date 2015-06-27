@@ -7,10 +7,10 @@ import javax.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.croydon.quick.domain.Category;
 import com.croydon.quick.domain.Task;
 import com.croydon.quick.domain.TaskRepository;
 import com.croydon.quick.exception.TaskAlreadyExistsException;
+import com.croydon.quick.exception.TaskDoesntExistException;
 import com.croydon.quick.service.TaskService;
 
 @Service
@@ -28,14 +28,25 @@ public class TaskServiceImpl implements TaskService {
 	public Task findOne(Long id) {
 		return taskRepository.findOne(id);
 	}
-
+	
 	@Override
 	@Transactional
-	public Task save(Task task) throws TaskAlreadyExistsException {
+	public Task create(Task task) throws TaskAlreadyExistsException {
 		Task existing = taskRepository.findOne(task.getId());
 	    if (existing != null) {
 	        throw new TaskAlreadyExistsException(
 	                String.format("There already exists a task with id=%s", task.getId()));
+	    }
+	    return taskRepository.save(task);
+	}
+	
+	@Override
+	@Transactional
+	public Task save(Task task) throws TaskDoesntExistException {
+		Task existing = taskRepository.findOne(task.getId());
+	    if (existing == null) {
+	        throw new TaskDoesntExistException(
+	                String.format("Task id=%s does not exist", task.getId()));
 	    }
 	    return taskRepository.save(task);
 	}

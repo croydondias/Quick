@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 import com.croydon.quick.domain.Project;
 import com.croydon.quick.domain.ProjectRepository;
 import com.croydon.quick.exception.ProjectAlreadyExistsException;
+import com.croydon.quick.exception.ProjectDoesntExistException;
 import com.croydon.quick.service.ProjectService;
 
 @Service
@@ -30,11 +31,22 @@ public class ProjectServiceImpl implements ProjectService {
 
 	@Override
 	@Transactional
-	public Project save(Project project) throws ProjectAlreadyExistsException {
+	public Project create(Project project) throws ProjectAlreadyExistsException {
 		Project existing = projectRepository.findOne(project.getId());
 	    if (existing != null) {
 	        throw new ProjectAlreadyExistsException(
 	                String.format("There already exists a project with id=%s", project.getId()));
+	    }
+	    return projectRepository.save(project);
+	}
+	
+	@Override
+	@Transactional
+	public Project save(Project project) throws ProjectDoesntExistException {
+		Project existing = projectRepository.findOne(project.getId());
+	    if (existing == null) {
+	        throw new ProjectDoesntExistException(
+	                String.format("Project id=%s does not exist", project.getId()));
 	    }
 	    return projectRepository.save(project);
 	}

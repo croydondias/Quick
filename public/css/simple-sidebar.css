@@ -103,6 +103,14 @@
     color: beige;
 }
 
+.content-cross {
+	color: black;
+}
+
+.content-cross:hover {
+	color: red;
+}
+
 @media(min-width:768px) {
     #wrapper {
         padding-left: 250px;

@@ -6,6 +6,13 @@ app.config(function(RestangularProvider) {
     RestangularProvider.setBaseUrl(
         'http://localhost:8080/api');
         // Note that we run everything on the localhost
+    
+//    RestangularProvider.setRequestInterceptor(function(elem, operation) {
+//  	  if (operation === "remove") {
+//  	     return undefined;
+//  	  } 
+//  	  return elem;
+//  	});
 });
 
 //app.config(function (HateoasInterceptorProvider) {
@@ -24,6 +31,8 @@ app.config(function(RestangularProvider) {
 	 return service;
 	 }]);
 	}());
+
+
 
 // Define the controller
 app.controller('mainCtrl', function($scope, Restangular, $resource, $http) {
@@ -74,6 +83,7 @@ app.controller('mainCtrl', function($scope, Restangular, $resource, $http) {
 		$scope.taskService.doGET("/findByProjectId/" + id).then(function(response){
 	    	var selectedTasks = response;
 	    	$scope.tasks = selectedTasks;
+	    	console.log(selectedTasks);
 	    	if (angular.isUndefined(selectedTasks)) {
 	    		console.log('0 tasks loaded');
 	    	} else {
@@ -91,6 +101,17 @@ app.controller('mainCtrl', function($scope, Restangular, $resource, $http) {
 	$scope.editedTodo = null;
 	
 	
+	$scope.tasksRemaining = function () {
+		var count = 0;
+		if (angular.isArray($scope.tasks)) {
+			for (var i=0; i<$scope.tasks.length; i++) {
+				if (!$scope.tasks[i].done) {
+					count = count + 1;
+				}
+			}	
+		}
+		return count;
+	}
 	
 	$scope.addTask = function () {
 		
@@ -109,12 +130,11 @@ app.controller('mainCtrl', function($scope, Restangular, $resource, $http) {
 		
 		$http.post('/api' + '/tasks', {
             name: newTask.name,
-            description: 'tesr descp',
+            description: 'test description',
             done: false,
             project_id: $scope.selectedProjectId
         }).
 	   success(function(data, status, headers) {
-	   		//alert("Task added");
 	   		console.log('task added');
 	   	
 	            //var newTaskUri = headers()["location"];
@@ -136,14 +156,41 @@ app.controller('mainCtrl', function($scope, Restangular, $resource, $http) {
 //			});
 	};
 	
+	$scope.toggleTaskDone = function (task) {
+		console.log('Toggling task: ' + task.name + " " + task.done);
+		
+//		$http.put("/api/task/" + task.id).then(function(response){
+//			console.log(response);
+//		});
+		
+		$scope.taskService.get(task.id).then(function(response){
+			response.done = task.done;
+			response.save();
+		});
+	};
+	
 	
 	$scope.removeTask = function (task) {
 		console.log('Removing task: ' + task.name);
 		
-		$scope.taskService.get(task.id).then(function(response){
+		$http.delete("/api/task/" + task.id).then(function(response){
 			console.log(response);
-			response.remove();
+			
+			// Remove the task from the array, rather than reloading
+			// from the database.
+			var index = $scope.tasks.indexOf(task);
+		    if (index > -1) $scope.tasks.splice(index, 1);
 		});
+		
+//		$scope.taskService.remove("/"+task.id).then(function(response){
+//			console.log(response);
+//			//response.remove();
+//		});
+		
+//		$scope.taskService.get(task.id).then(function(response){
+//			console.log(response);
+//			response.remove();
+//		});
 	};
 	
 	

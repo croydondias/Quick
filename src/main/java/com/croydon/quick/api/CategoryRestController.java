@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.croydon.quick.domain.Category;
 import com.croydon.quick.exception.CategoryAlreadyExistsException;
+import com.croydon.quick.exception.CategoryDoesntExistException;
 import com.croydon.quick.service.CategoryService;
 
 @RestController
@@ -34,8 +35,8 @@ public class CategoryRestController {
 	}
 
 	@RequestMapping(method = RequestMethod.POST)
-	public Category create(@RequestBody Category category) throws Exception {
-		return categoryService.save(category);
+	public Category create(@RequestBody Category category) throws CategoryAlreadyExistsException {
+		return categoryService.create(category);
 	}
 
 	@RequestMapping(method = RequestMethod.DELETE, value = "{id}")
@@ -44,14 +45,21 @@ public class CategoryRestController {
 	}
 
 	@RequestMapping(method = RequestMethod.PUT, value = "{id}")
-	public Category update(@PathVariable String id, @RequestBody Category category) {
-		return null;
+	public Category update(@PathVariable String id, @RequestBody Category category) throws CategoryDoesntExistException {
+		Category update = categoryService.findOne(Long.valueOf(id));
+		update.setName(category.getName());
+		return categoryService.save(update);
 	}
 	
 	@ExceptionHandler
 	@ResponseStatus(value=HttpStatus.CONFLICT)
-	public String handleUserAlreadyExistsException(CategoryAlreadyExistsException e) {
+	public String handleCategoryAlreadyExistsException(CategoryAlreadyExistsException e) {
 	    return e.getMessage();
 	}
 	
+	@ExceptionHandler
+	@ResponseStatus(value=HttpStatus.CONFLICT)
+	public String handleCategoryDoesnExistException(CategoryDoesntExistException e) {
+	    return e.getMessage();
+	}
 }

@@ -19,6 +19,8 @@
     
     <!-- Bootstrap Core CSS -->
     <link href="css/bootstrap.min.css" rel="stylesheet">
+    
+    <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet">
 
     <!-- Custom CSS -->
     <link href="css/simple-sidebar.css" rel="stylesheet">
@@ -149,23 +151,20 @@
 				</form>
 				
 		         <ul class="list-group checked-list-box">
-	     			<!-- <li ng-repeat="x in tasks" class="list-group-item"> {{ x.name }}</li> -->
-	     			
-	     			
 	     			<li ng-repeat="task in tasks" class="list-group-item">
 	     				<div class="view">
-							<input class="toggle" type="checkbox" ng-model="task.done" ng-change="toggleCompleted(task)">
+							<input class="toggle" type="checkbox" ng-model="task.done" ng-change="toggleTaskDone(task)">
 							<label ng-dblclick="editTodo(task)">{{task.name}}</label>
 							<div class="pull-right">
 								<label>{{task.employee_id}}</label>
-								<button class="destroy" ng-click="removeTask(task)"></button>
+								
+								<a href ng-click="removeTask(task)" class="destroy"><i class="content-cross fa fa-times fa-2x"></i></a>
 							</div>
 						</div>
 	     			</li>
 	     			
-     					
-	     			
 	             </ul>
+	             <span><i>{{tasksRemaining()}} items left</i></span>
 			</section>
 			
 	         

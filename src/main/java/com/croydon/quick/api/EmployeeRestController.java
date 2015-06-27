@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.croydon.quick.domain.Employee;
 import com.croydon.quick.exception.EmployeeAlreadyExistsException;
+import com.croydon.quick.exception.EmployeeDoesntExistException;
 import com.croydon.quick.service.EmployeeService;
 
 @RestController
@@ -34,8 +35,8 @@ public class EmployeeRestController {
 	}
 
 	@RequestMapping(method = RequestMethod.POST)
-	public Employee create(@RequestBody Employee user) throws Exception {
-		return employeeService.save(user);
+	public Employee create(@RequestBody Employee user) throws EmployeeAlreadyExistsException {
+		return employeeService.create(user);
 	}
 
 	@RequestMapping(method = RequestMethod.DELETE, value = "{id}")
@@ -44,13 +45,24 @@ public class EmployeeRestController {
 	}
 
 	@RequestMapping(method = RequestMethod.PUT, value = "{id}")
-	public Employee update(@PathVariable String id, @RequestBody Employee employee) {
-		return null;
+	public Employee update(@PathVariable String id, @RequestBody Employee employee) throws EmployeeDoesntExistException {
+		Employee update = employeeService.findOne(Long.valueOf(id));
+		update.setFirstName(employee.getFirstName());
+		update.setLastName(employee.getLastName());
+		update.setEmail(employee.getEmail());
+		update.setPassword(employee.getPassword());  // TODO possible risk
+		return employeeService.save(update);
 	}
 	
 	@ExceptionHandler
 	@ResponseStatus(value=HttpStatus.CONFLICT)
-	public String handleUserAlreadyExistsException(EmployeeAlreadyExistsException e) {
+	public String handleEmployeeAlreadyExistsException(EmployeeAlreadyExistsException e) {
+	    return e.getMessage();
+	}
+	
+	@ExceptionHandler
+	@ResponseStatus(value=HttpStatus.CONFLICT)
+	public String handleEmployeeDoesntExistException(EmployeeDoesntExistException e) {
 	    return e.getMessage();
 	}
 	

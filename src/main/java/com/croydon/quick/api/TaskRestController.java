@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.croydon.quick.domain.Task;
 import com.croydon.quick.exception.TaskAlreadyExistsException;
+import com.croydon.quick.exception.TaskDoesntExistException;
 import com.croydon.quick.service.TaskService;
 
 @RestController
@@ -35,8 +36,8 @@ public class TaskRestController {
 	}
 
 	@RequestMapping(method = RequestMethod.POST)
-	public Task create(@RequestBody Task task) throws Exception {
-		return taskService.save(task);
+	public Task create(@RequestBody Task task) throws TaskAlreadyExistsException {
+		return taskService.create(task);
 	}
 
 	@RequestMapping(method = RequestMethod.DELETE, value = "{id}")
@@ -45,13 +46,24 @@ public class TaskRestController {
 	}
 
 	@RequestMapping(method = RequestMethod.PUT, value = "{id}")
-	public Task update(@PathVariable String id, @RequestBody Task task) {
-		return null;
+	public Task update(@PathVariable String id, @RequestBody Task task) throws TaskDoesntExistException {
+		Task update = taskService.findOne(Long.valueOf(id));
+		update.setName(task.getName());
+		update.setDescription(task.getDescription());
+		update.setDone(task.getDone());
+		update.setProject_id(task.getProject_id());
+		return taskService.save(update);
 	}
 	
 	@ExceptionHandler
 	@ResponseStatus(value=HttpStatus.CONFLICT)
-	public String handleUserAlreadyExistsException(TaskAlreadyExistsException e) {
+	public String handleTaskAlreadyExistsException(TaskAlreadyExistsException e) {
+	    return e.getMessage();
+	}
+	
+	@ExceptionHandler
+	@ResponseStatus(value=HttpStatus.CONFLICT)
+	public String handleTaskDoesntExistException(TaskDoesntExistException e) {
 	    return e.getMessage();
 	}
 	
