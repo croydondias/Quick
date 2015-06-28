@@ -9,6 +9,8 @@ import org.springframework.stereotype.Service;
 
 import com.croydon.quick.domain.Project;
 import com.croydon.quick.domain.ProjectRepository;
+import com.croydon.quick.domain.Task;
+import com.croydon.quick.domain.TaskRepository;
 import com.croydon.quick.exception.ProjectAlreadyExistsException;
 import com.croydon.quick.exception.ProjectDoesntExistException;
 import com.croydon.quick.service.ProjectService;
@@ -18,6 +20,8 @@ public class ProjectServiceImpl implements ProjectService {
 	
 	@Autowired
 	private ProjectRepository projectRepository;
+	@Autowired
+	private TaskRepository taskRepository;
 	
 	@Override
 	public List<Project> findAll() {
@@ -55,6 +59,17 @@ public class ProjectServiceImpl implements ProjectService {
 	@Transactional
 	public void delete(Long id) {
 		projectRepository.delete(id);
+	}
+
+	@Override
+	public Long remainingTaskCount(Long id) {
+		long count = 0;
+		for (Task task : taskRepository.findAll()) {
+			if (task.getProject_id() == id && !task.getDone()) {
+				count++;
+			}
+		}
+		return count;
 	}
 
 }

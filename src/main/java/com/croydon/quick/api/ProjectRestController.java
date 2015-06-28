@@ -64,4 +64,9 @@ public class ProjectRestController {
 	public String handleProjectDoesntExistException(ProjectDoesntExistException e) {
 	    return e.getMessage();
 	}
+	
+	@RequestMapping(method = RequestMethod.GET, value = "{id}/remainingTaskCount")
+	public Long remainingTaskCount(@PathVariable String id) {
+		return projectService.remainingTaskCount(Long.valueOf(id));
+	}
 }

@@ -13,4 +13,5 @@ public interface ProjectService {
 	Project create(Project project) throws ProjectAlreadyExistsException;
 	Project save(Project project) throws ProjectDoesntExistException;
 	void delete(Long id);
+	Long remainingTaskCount(Long id);
 }

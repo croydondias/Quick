@@ -52,6 +52,7 @@ public class TaskRestController {
 		update.setDescription(task.getDescription());
 		update.setDone(task.getDone());
 		update.setProject_id(task.getProject_id());
+		update.setEmployee_id(task.getEmployee_id());
 		return taskService.save(update);
 	}
 	

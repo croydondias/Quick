@@ -51,8 +51,35 @@ app.controller('mainCtrl', function($scope, Restangular, $resource, $http) {
 		//console.log(response);
 	});
 	
+	$scope.reloadProjectTaskCount = function (projectId) {
+		$scope.projectService.doGET("/" + projectId + "/remainingTaskCount").then(function(response){
+			var count = parseInt(response);
+	    	if (isNaN(count)) {
+	    		count = 0;
+	    	}
+			
+			$scope.projectTaskCounts[projectId] = count;
+		});
+	}
+	
+	$scope.reloadProjectTaskCounts = function () {
+		
+		$scope.projectTaskCounts = {};
+		for (var i=0; i<$scope.projects.length; i++) {
+			var projectId = $scope.projects[i].id;
+			$scope.reloadProjectTaskCount(projectId);
+		}
+	};
+	
+	
 	$scope.selectedProjectId = '';
 	$scope.tasks = '';
+	
+	$scope.taskDataChanged = function () {
+		$scope.reloadProjectTaskCounts();
+	};
+	
+	
 	
 	$scope.employeeService = Restangular.all('employee');
 	$scope.categoryService = Restangular.all('category');
@@ -68,6 +95,8 @@ app.controller('mainCtrl', function($scope, Restangular, $resource, $http) {
 	});
 	$scope.projectService.doGET().then(function(response){
     	$scope.projects = response;
+    	
+    	$scope.reloadProjectTaskCounts();
 	});
 	$scope.taskService.doGET().then(function(response){
     	//$scope.tasks = response;
@@ -76,22 +105,17 @@ app.controller('mainCtrl', function($scope, Restangular, $resource, $http) {
 	
 	
 	$scope.loadTasks = function (id) {
-		console.log('Loading tasks..' + id);
+		//console.log('Loading tasks..' + id);
 		$scope.selectedProjectId = id;
-		
 		
 		$scope.taskService.doGET("/findByProjectId/" + id).then(function(response){
 	    	var selectedTasks = response;
 	    	$scope.tasks = selectedTasks;
-	    	console.log(selectedTasks);
-	    	if (angular.isUndefined(selectedTasks)) {
-	    		console.log('0 tasks loaded');
-	    	} else {
-	    		console.log(selectedTasks.length + ' tasks loaded');
+	    	var count = 0;
+	    	if (!angular.isUndefined(selectedTasks)) {
+	    		count = selectedTasks.length;
 	    	}
-	    	
-	    	
-			
+	    	console.log(count + ' tasks loaded');
 		});
 		
 	};
@@ -144,6 +168,7 @@ app.controller('mainCtrl', function($scope, Restangular, $resource, $http) {
 	            //findAllTasks();
 	   			$scope.newTask = '';
 	   			$scope.loadTasks($scope.selectedProjectId);
+	   			$scope.taskDataChanged();
 	     });
 		
 		$scope.saving = false;
@@ -166,6 +191,7 @@ app.controller('mainCtrl', function($scope, Restangular, $resource, $http) {
 		$scope.taskService.get(task.id).then(function(response){
 			response.done = task.done;
 			response.save();
+			$scope.taskDataChanged();
 		});
 	};
 	
@@ -180,6 +206,7 @@ app.controller('mainCtrl', function($scope, Restangular, $resource, $http) {
 			// from the database.
 			var index = $scope.tasks.indexOf(task);
 		    if (index > -1) $scope.tasks.splice(index, 1);
+		    $scope.taskDataChanged();
 		});
 		
 //		$scope.taskService.remove("/"+task.id).then(function(response){
@@ -193,6 +220,37 @@ app.controller('mainCtrl', function($scope, Restangular, $resource, $http) {
 //		});
 	};
 	
+	$scope.selectedItem = {};
+	$scope.changeEmployeeOnTask = function (task, employeeId) {
+		console.log("employee change on task: " + task.id + " ==>" + employeeId);
+		
+		$scope.taskService.get(task.id).then(function(response){
+			console.log(response);
+			response.employee_id = parseInt(employeeId);
+			console.log(response);
+			response.save();
+		});
+	};
+	
+	$scope.getEmployeeForTask = function (task) {
+		if (!angular.isUndefined(task)) {
+			//console.log("Looking up employee for task: " + task.id);
+			for (var i=0; i<$scope.employees.length; i++) {
+				var e = $scope.employees[i];
+				if (task.employee_id == e.id) {
+					//console.log("Matched employee: " + e.firstName);
+					return e;
+				}
+			}
+		}
+		//console.log("No matching employee found");
+		return "";
+	};
+	
+	$scope.getRemainingTasksCount = function () {
+		console.log("remaining task count");
+		
+	};
 	
 //    $scope.employees = Restangular.all('employee').doGET().$object;
 //    $scope.categories = Restangular.all('category').doGET().$object;

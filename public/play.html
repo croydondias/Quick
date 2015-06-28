@@ -70,14 +70,27 @@
                 	<a href="#">{{ x.name }}</a>
                 </li> -->
                 
+                <!-- <li>
+                    <a href ng-click="tasksRemainingX(projects[1].id)">Check <p class="badge">{{projectTaskCounts[2]}}</p></a>
+                </li> -->
                 
                 <div ng-repeat="category in categories">
                 	<li class="sidebar-category">
                 		{{ category.name}}
                 	</li>
                 	<li ng-repeat="project in projects" ng-show="project.category_id == {{category.id}}">
-	                	<!-- <a href="#">{{ project.name }}</a> -->
-	                	<a href ng-click="loadTasks(project.id)">{{ project.name }}</a>
+	                	
+	                	<!-- <a href ng-click="loadTasks(project.id)">{{ project.name }} <p class="badge">12</p></a> -->
+	                	<a href ng-click="loadTasks(project.id)">{{ project.name }} <p class="badge">{{projectTaskCounts[project.id]}}</p></a>
+	                	
+	                	
+	                	<!-- <div class="progress">
+						  <div class="progress-bar progress-bar-success" role="progressbar" aria-valuenow="40" aria-valuemin="0" aria-valuemax="100" style="width: 40%">
+						    <span class="sr-only">40% Complete (success)</span>
+						  </div>
+						</div> -->
+						
+						
 	                </li>
                 </div>
                 
@@ -156,7 +169,42 @@
 							<input class="toggle" type="checkbox" ng-model="task.done" ng-change="toggleTaskDone(task)">
 							<label ng-dblclick="editTodo(task)">{{task.name}}</label>
 							<div class="pull-right">
-								<label>{{task.employee_id}}</label>
+								
+								<!-- <div class="form-group">
+								  <label for="sel1">Select list:</label> -->
+								  <!-- <select title="Unassigned">
+								    <option>Croydon Dias</option>
+								    <option>Mannit Bilakhia</option>
+								    <option>Rishabh Sharma</option>
+								    <option>Alina Maydybura</option>
+								  </select> -->
+								<!-- </div> -->
+								
+								<!-- <select id="test" name="test">
+								    <option value="SelectBoxIt is:">SelectBoxIt is:</option>
+								    <option value="a jQuery Plugin">a jQuery Plugin</option>
+								    <option value="a Select Box Replacement">a Select Box Replacement</option>
+								    <option value="a Stateful UI Widget">a Stateful UI Widget</option>
+								  </select> -->
+								  
+								  <!-- <select ng-model="selectedItem" ng-change="changeEmployeeOnTask(task, selectedItem)" ng-init="selectedItem = selectedItem || employees[0].value"> -->
+								  
+								  <!-- <select ng-model="selectedItem[task.id]" ng-change="changeEmployeeOnTask(task, selectedItem[task.id])" 
+								  	ng-init="selectedItem[task.id] = selectedItem[task.id] || employees[0].value"> -->
+								  
+								  
+								  <!-- <select ng-model="selectedItem" ng-change="changeEmployeeOnTask(task, selectedItem)" 
+								  	ng-init="selectedItem = employees[0].id"> -->
+								  	
+								  <!-- <select ng-model="selectedItem" ng-change="changeEmployeeOnTask(task, selectedItem)" 
+								  	ng-init="selectedItem = getEmployeeForTask(task).id">
+								  	
+							        <option ng-repeat="item in employees" value="{{item.id}}">{{item.firstName}} {{item.lastName}}</option>
+							      </select> -->
+								
+								<select select-box ng-model="selected" ng-change="changeEmployeeOnTask(task, selected.id)"
+									ng-init="selected = getEmployeeForTask(task)"
+									ng-options="item.firstName + ' ' + item.lastName for item in employees track by item.id"></select>
 								
 								<a href ng-click="removeTask(task)" class="destroy"><i class="content-cross fa fa-times fa-2x"></i></a>
 							</div>
@@ -164,7 +212,8 @@
 	     			</li>
 	     			
 	             </ul>
-	             <span><i>{{tasksRemaining()}} items left</i></span>
+	             <span><i>{{tasksRemaining()}} items left</i></span>	             
+	             <!-- <span><i>{{tasksRemainingX(1)}} items left</i></span> -->
 			</section>
 			
 	         
