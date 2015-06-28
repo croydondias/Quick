@@ -13,7 +13,14 @@ pass: dubai
 psql -U postgres
 psql -d production -U sylvain --password
 
+# Technology Stack
 
+- Spring boot server side
+-- REST api
+- UI Developed completely using Bootstrap and jquery.
+- Angular JS is used in the UI to talk to the backend via the REST api provided by the server.
+- Postgres used for the database. Since Hibernate is used for querying the database, it should be quite a simple change to swap the underlying database to something else like MySQL, Oracle, etc.
+- Maven is used for dependency management.
 
 # Please obtain a Google maps developer key (https://developers.google.com/maps/) and replace the one in /public/index.html
 
@@ -35,3 +42,13 @@ The app uses the base template from http://startbootstrap.com/template-overviews
 - Comment javascript code
 
 - Write instructions on how to setup database and run application
+
+# Future tasks
+- SSL support
+- Checks for sql injection
+- Check for OWASP vulnerabilities
+- Ability to delete Categories and Projects
+- Document the API
+- Status page for users to check current/past system status (https://status.status.io/)
+- Responsive website that works on mobile/tablets
+- iOS/Android apps using the REST API

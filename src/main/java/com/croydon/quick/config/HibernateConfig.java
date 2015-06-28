@@ -17,7 +17,7 @@ public class HibernateConfig {
 	private static final Logger LOG = Logger.getLogger(HibernateConfig.class);
 	
 	@Autowired
-	private EmployeeRepository repository;
+	private EmployeeRepository employeeRepository;
 	
     @Bean
     public HibernateJpaSessionFactoryBean sessionFactory(EntityManagerFactory emf) {
@@ -27,9 +27,10 @@ public class HibernateConfig {
     }
     
     @PostConstruct
-	public void xxx() {
+	public void checkDatabase() {
 		LOG.info("Checking database connection...");
-		LOG.info(this.repository.findAll());
+		LOG.info(this.employeeRepository.findAll());
+		LOG.info("Found employee table [DB connected]");
 		
 	}
 }

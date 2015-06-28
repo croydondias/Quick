@@ -156,21 +156,21 @@
 	          <div class="dropdown-menu" class="padding: 15px; padding-bottom: 0px;">
 		        
 		        <div class="tab-pane fade active in" id="register">
-		            <form class="form-horizontal">
+		            <form class="form-horizontal" method="POST" action="http://localhost:8080/api/login/register">
 		            <fieldset>
 		            <!-- Sign In Form -->
 		            <!-- Text input-->
 		            <div class="control-group">
-		              <label class="control-label" for="firstname">First name:</label>
+		              <label class="control-label" for="firstName">First name:</label>
 		              <div class="controls">
-		                <input required="" id="firstname" name="firstname" type="text" class="form-control" placeholder="First name" class="input-medium" required="">
+		                <input required="" id="firstName" name="firstName" type="text" class="form-control" placeholder="First name" class="input-medium" required="">
 		              </div>
 		            </div>
 		            
 		            <div class="control-group">
-		              <label class="control-label" for="lastname">Last name:</label>
+		              <label class="control-label" for="lastName">Last name:</label>
 		              <div class="controls">
-		                <input required="" id="lastname" name="lastname" type="text" class="form-control" placeholder="Last name" class="input-medium" required="">
+		                <input required="" id="lastName" name="lastName" type="text" class="form-control" placeholder="Last name" class="input-medium" required="">
 		              </div>
 		            </div>
 		            
@@ -194,7 +194,8 @@
 		            <div class="control-group">
 		              <label class="control-label" for="register"></label>
 		              <div class="controls">
-		                <button id="register" name="register" class="btn btn-success">Save</button>
+		                <!-- <button id="register" name="register" class="btn btn-success">Save</button> -->
+		                <input id="register" type="submit" value="Login" />
 		              </div>
 		            </div>
 		            </fieldset>
