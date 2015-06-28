@@ -23,6 +23,7 @@ public class ProjectServiceImpl implements ProjectService {
 	@Autowired
 	private TaskRepository taskRepository;
 	
+	
 	@Override
 	public List<Project> findAll() {
 		return (List<Project>) projectRepository.findAll();
@@ -65,7 +66,7 @@ public class ProjectServiceImpl implements ProjectService {
 	public Long remainingTaskCount(Long id) {
 		long count = 0;
 		for (Task task : taskRepository.findAll()) {
-			if (task.getProject_id() == id && !task.getDone()) {
+			if (task.getProject_id().equals(id) && !task.getDone()) {
 				count++;
 			}
 		}

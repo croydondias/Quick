@@ -1,16 +1,16 @@
 // Define the application
-app = angular.module('tasks', ['restangular', 'ngResource', 'hateoas']);
+app = angular.module('tasks', ['restangular', 'ngResource']);
 
 // Configure the application
 app.config(function(RestangularProvider) {
     RestangularProvider.setBaseUrl(
         'http://localhost:8080/api');
         // Note that we run everything on the localhost
-    
+
 //    RestangularProvider.setRequestInterceptor(function(elem, operation) {
 //  	  if (operation === "remove") {
 //  	     return undefined;
-//  	  } 
+//  	  }
 //  	  return elem;
 //  	});
 });
@@ -22,7 +22,7 @@ app.config(function(RestangularProvider) {
 (function() {
 	 angular.module("tasks").factory("Employees",
 	 ["Restangular", function(Restangular) {
-	 var service = Restangular.service("employee");  
+	 var service = Restangular.service("employee");
 	                        // I can add custom methods to my Employee service
 	                        // by adding functions here service
 	                        service.validateData = function(employee) {
@@ -40,30 +40,31 @@ app.controller('mainCtrl', function($scope, Restangular, $resource, $http) {
 //        $scope.tasks = result;
 //        console.log('tasks ->' + $scope.tasks);
 //    });
-    
+
     $scope.resource = Restangular.all('employee');
-	
+
 	$scope.resource.get(1).then(function(response){
 			//console.log(response);
 	});
-	
+
 	$scope.resource.doGET().then(function(response){
 		//console.log(response);
 	});
-	
+
 	$scope.reloadProjectTaskCount = function (projectId) {
+		
 		$scope.projectService.doGET("/" + projectId + "/remainingTaskCount").then(function(response){
 			var count = parseInt(response);
 	    	if (isNaN(count)) {
 	    		count = 0;
 	    	}
-			
+	    	//console.log('Project ' + projectId + " has " + count + ' tasks remaining')
 			$scope.projectTaskCounts[projectId] = count;
 		});
 	}
-	
+
 	$scope.reloadProjectTaskCounts = function () {
-		
+		//console.log('Reloading project task counts..');
 		$scope.projectTaskCounts = {};
 		for (var i=0; i<$scope.projects.length; i++) {
 			var projectId = $scope.projects[i].id;
@@ -71,22 +72,28 @@ app.controller('mainCtrl', function($scope, Restangular, $resource, $http) {
 		}
 	};
 	
+	$scope.showProjectInput = {};
+	$scope.newProject = {};
 	
 	$scope.selectedProjectId = '';
 	$scope.tasks = '';
-	
+
 	$scope.taskDataChanged = function () {
 		$scope.reloadProjectTaskCounts();
 	};
 	
-	
-	
+	$scope.projectDataChanged = function () {
+		$scope.reloadProjectTaskCounts();
+	};
+
+
+
 	$scope.employeeService = Restangular.all('employee');
 	$scope.categoryService = Restangular.all('category');
 	$scope.projectService = Restangular.all('project');
 	$scope.taskService = Restangular.all('task');
-	
-	
+
+
 	$scope.employeeService.doGET().then(function(response){
     	$scope.employees = response;
 	});
@@ -95,19 +102,29 @@ app.controller('mainCtrl', function($scope, Restangular, $resource, $http) {
 	});
 	$scope.projectService.doGET().then(function(response){
     	$scope.projects = response;
-    	
+
     	$scope.reloadProjectTaskCounts();
 	});
 	$scope.taskService.doGET().then(function(response){
     	//$scope.tasks = response;
 	});
+
+	$scope.loadAllProjects = function (id) {
+		$scope.projectService.doGET().then(function(response){
+	    	console.log('Loading all projects');
+			$scope.projects = response;
+
+	    	$scope.reloadProjectTaskCounts();
+		});
+	};
+	$scope.loadAllProjects();
 	
-	
-	
+
+
 	$scope.loadTasks = function (id) {
 		//console.log('Loading tasks..' + id);
 		$scope.selectedProjectId = id;
-		
+
 		$scope.taskService.doGET("/findByProjectId/" + id).then(function(response){
 	    	var selectedTasks = response;
 	    	$scope.tasks = selectedTasks;
@@ -117,14 +134,55 @@ app.controller('mainCtrl', function($scope, Restangular, $resource, $http) {
 	    	}
 	    	console.log(count + ' tasks loaded');
 		});
-		
+
 	};
-	
-	
+
+
 	$scope.newTask = '';
 	$scope.editedTodo = null;
 	
 	
+	$scope.addProject = function (categoryId) {
+		
+		var newProject = {
+			category_id: categoryId,
+			name: $scope.newProject[categoryId].trim(),
+			description: ''
+		};
+		
+		var newProjectName = $scope.newProject[categoryId].trim();
+		
+		if (!newProjectName) {
+			return;
+		}
+		
+		console.log('Adding project ' + newProjectName);
+		$scope.saving = true;
+
+		$http.post('/api' + '/projects', {
+            category_id: categoryId,
+			name: $scope.newProject[categoryId].trim(),
+			description: ''
+        }).
+	   success(function(data, status, headers) {
+	   		console.log('project added');
+	   		
+//   			$scope.newTask = '';
+//   			$scope.loadTasks($scope.selectedProjectId);
+//   			$scope.taskDataChanged();
+   			
+   			$scope.newProject[categoryId] = '';
+   			$scope.loadAllProjects();
+   			//$scope.projectDataChanged();
+	     }).
+	     finally(function() {
+	    	 $scope.saving = false;
+	     });
+		
+		
+	}
+	
+
 	$scope.tasksRemaining = function () {
 		var count = 0;
 		if (angular.isArray($scope.tasks)) {
@@ -132,98 +190,112 @@ app.controller('mainCtrl', function($scope, Restangular, $resource, $http) {
 				if (!$scope.tasks[i].done) {
 					count = count + 1;
 				}
-			}	
+			}
 		}
 		return count;
 	}
 	
 	$scope.addTask = function () {
-		
-		var newTask = {
-			name: $scope.newTask.trim(),
-			done: false
-		};
 
-		if (!newTask.name) {
+		var newTaskName = $scope.newTask.trim();
+		if (!newTaskName) {
 			return;
 		}
-		
-		console.log('Adding task ' + newTask.name);
 
+		console.log('Adding task ' + newTaskName);
 		$scope.saving = true;
-		
+
 		$http.post('/api' + '/tasks', {
-            name: newTask.name,
+            name: newTaskName,
             description: 'test description',
             done: false,
             project_id: $scope.selectedProjectId
         }).
 	   success(function(data, status, headers) {
 	   		console.log('task added');
-	   	
-	            //var newTaskUri = headers()["location"];
-	            //console.log("Might be good to GET " + newTaskUri + " and append the task.");
-	            // Refetching EVERYTHING every time can get expensive over time
-	            // Better solution would be to $http.get(headers()["location"]) and add it to the list
-	            //findAllTasks();
-	   			$scope.newTask = '';
-	   			$scope.loadTasks($scope.selectedProjectId);
-	   			$scope.taskDataChanged();
+   			$scope.newTask = '';
+   			$scope.loadTasks($scope.selectedProjectId);
+   			$scope.taskDataChanged();
+	     }).
+	     finally(function() {
+	    	 $scope.saving = false;
 	     });
-		
-		$scope.saving = false;
-//		store.insert(newTodo)
-//			.then(function success() {
-//				$scope.newTodo = '';
-//			})
-//			.finally(function () {
-//				$scope.saving = false;
-//			});
 	};
 	
+//	$scope.addTask = function () {
+//
+//		var newTask = {
+//			name: $scope.newTask.trim(),
+//			done: false
+//		};
+//
+//		if (!newTask.name) {
+//			return;
+//		}
+//
+//		console.log('Adding task ' + newTask.name);
+//		$scope.saving = true;
+//
+//		$http.post('/api' + '/tasks', {
+//            name: newTask.name,
+//            description: 'test description',
+//            done: false,
+//            project_id: $scope.selectedProjectId
+//        }).
+//	   success(function(data, status, headers) {
+//	   		console.log('task added');
+//   			$scope.newTask = '';
+//   			$scope.loadTasks($scope.selectedProjectId);
+//   			$scope.taskDataChanged();
+//	     }).
+//	     finally(function() {
+//	    	 $scope.saving = false;
+//	     });
+//	};
+
 	$scope.toggleTaskDone = function (task) {
 		console.log('Toggling task: ' + task.name + " " + task.done);
-		
+
 //		$http.put("/api/task/" + task.id).then(function(response){
 //			console.log(response);
 //		});
-		
+
 		$scope.taskService.get(task.id).then(function(response){
 			response.done = task.done;
 			response.save();
 			$scope.taskDataChanged();
 		});
 	};
-	
-	
+
+
 	$scope.removeTask = function (task) {
 		console.log('Removing task: ' + task.name);
-		
+
 		$http.delete("/api/task/" + task.id).then(function(response){
 			console.log(response);
-			
+
 			// Remove the task from the array, rather than reloading
 			// from the database.
 			var index = $scope.tasks.indexOf(task);
 		    if (index > -1) $scope.tasks.splice(index, 1);
 		    $scope.taskDataChanged();
 		});
-		
+
 //		$scope.taskService.remove("/"+task.id).then(function(response){
 //			console.log(response);
 //			//response.remove();
 //		});
-		
+
 //		$scope.taskService.get(task.id).then(function(response){
 //			console.log(response);
 //			response.remove();
 //		});
 	};
-	
+
 	$scope.selectedItem = {};
 	$scope.changeEmployeeOnTask = function (task, employeeId) {
 		console.log("employee change on task: " + task.id + " ==>" + employeeId);
-		
+
 		$scope.taskService.get(task.id).then(function(response){
 			console.log(response);
 			response.employee_id = parseInt(employeeId);
@@ -231,7 +303,7 @@ app.controller('mainCtrl', function($scope, Restangular, $resource, $http) {
 			response.save();
 		});
 	};
-	
+
 	$scope.getEmployeeForTask = function (task) {
 		if (!angular.isUndefined(task)) {
 			//console.log("Looking up employee for task: " + task.id);
@@ -246,24 +318,34 @@ app.controller('mainCtrl', function($scope, Restangular, $resource, $http) {
 		//console.log("No matching employee found");
 		return "";
 	};
-	
+
 	$scope.getRemainingTasksCount = function () {
 		console.log("remaining task count");
-		
+
 	};
-	
+
 //    $scope.employees = Restangular.all('employee').doGET().$object;
 //    $scope.categories = Restangular.all('category').doGET().$object;
 //    $scope.projects = Restangular.all('project').doGET().$object;
 //    $scope.tasks = Restangular.all('task').doGET().$object;
-    
+
 //    $http.get("http://www.w3schools.com/angular/customers.php")
 //    .success(function (response) {
 //    	//console.log(response);
 //    	//console.log(response.records);
 //    	$scope.names = response.records;
 //    });
-    
+	
+	
+	$scope.$watch('$viewContentLoaded', function(){
+	    // do something
+		console.log('Page has finished loading..');
+		
+		$('a[rel=popover]').popover({
+	        html: 'true',
+	    placement: 'right'
+	    })
+	 });
 });
 
 // Standardize data format (extract from meta-data where needed)
