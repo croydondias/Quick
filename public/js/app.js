@@ -72,6 +72,9 @@ app.controller('mainCtrl', function($scope, Restangular, $resource, $http) {
 		}
 	};
 	
+	$scope.showCategoryInput = false;
+	$scope.newCategory = '';
+	
 	$scope.showProjectInput = {};
 	$scope.newProject = {};
 	
@@ -100,16 +103,20 @@ app.controller('mainCtrl', function($scope, Restangular, $resource, $http) {
 	$scope.categoryService.doGET().then(function(response){
     	$scope.categories = response;
 	});
-	$scope.projectService.doGET().then(function(response){
-    	$scope.projects = response;
-
-    	$scope.reloadProjectTaskCounts();
-	});
 	$scope.taskService.doGET().then(function(response){
     	//$scope.tasks = response;
 	});
 
-	$scope.loadAllProjects = function (id) {
+	$scope.loadAllCategories = function () {
+		$scope.categoryService.doGET().then(function(response){
+			console.log('Loading all categories');
+			$scope.categories = response;
+		});
+		
+	};
+	$scope.loadAllCategories();
+	
+	$scope.loadAllProjects = function () {
 		$scope.projectService.doGET().then(function(response){
 	    	console.log('Loading all projects');
 			$scope.projects = response;
@@ -141,6 +148,35 @@ app.controller('mainCtrl', function($scope, Restangular, $resource, $http) {
 	$scope.newTask = '';
 	$scope.editedTodo = null;
 	
+	$scope.addCategoryClick = function () {
+		console.log('addCategoryClicked');
+		console.log($scope.showCategoryInput);
+	};
+	
+	$scope.addCategory = function () {
+		var newCategoryName = $scope.newCategory.trim();
+		if (!newCategoryName) {
+			return;
+		}
+
+		console.log('Adding category ' + newCategoryName);
+		$scope.saving = true;
+
+		$http.post('/api' + '/categories', {
+            name: newCategoryName
+        }).
+	   success(function(data, status, headers) {
+	   		console.log('category added');
+   			$scope.newCategory = '';
+   			$scope.loadAllCategories();
+	     }).
+	     finally(function() {
+	    	 $scope.saving = false;
+	     });
+		
+		$scope.showCategoryInput = false;
+		
+	};
 	
 	$scope.addProject = function (categoryId) {
 		
@@ -167,10 +203,6 @@ app.controller('mainCtrl', function($scope, Restangular, $resource, $http) {
 	   success(function(data, status, headers) {
 	   		console.log('project added');
 	   		
-//   			$scope.newTask = '';
-//   			$scope.loadTasks($scope.selectedProjectId);
-//   			$scope.taskDataChanged();
-   			
    			$scope.newProject[categoryId] = '';
    			$scope.loadAllProjects();
    			//$scope.projectDataChanged();
@@ -178,9 +210,7 @@ app.controller('mainCtrl', function($scope, Restangular, $resource, $http) {
 	     finally(function() {
 	    	 $scope.saving = false;
 	     });
-		
-		
-	}
+	};
 	
 
 	$scope.tasksRemaining = function () {
@@ -193,7 +223,7 @@ app.controller('mainCtrl', function($scope, Restangular, $resource, $http) {
 			}
 		}
 		return count;
-	}
+	};
 	
 	$scope.addTask = function () {
 
@@ -341,10 +371,10 @@ app.controller('mainCtrl', function($scope, Restangular, $resource, $http) {
 	    // do something
 		console.log('Page has finished loading..');
 		
-		$('a[rel=popover]').popover({
-	        html: 'true',
-	    placement: 'right'
-	    })
+//		$('a[rel=popover]').popover({
+//	        html: 'true',
+//	    placement: 'right'
+//	    })
 	 });
 });
 

@@ -40,39 +40,50 @@
         <div id="sidebar-wrapper">
             <ul class="sidebar-nav">
                 <li class="sidebar-brand">
-                    <a href="./index.html">
-                        Quick
+                    <!-- <a href="#">
+                        Add a new category 
+                    </a> -->
+                    
+                    <!-- <a href="#" style="display: inline">
+                        <i class="fa fa-angle-double-right fa-1x"></i>Add a new category
+                    </a> -->
+                    
+                    <!-- <a href ng-click="showCategoryInput = true; addCategoryClick();" ng-init="showCategoryInput" style="display: inline">
+                        <i class="fa fa-angle-double-right fa-1x"></i>Add a new category
+                    </a> -->
+                    
+                    <a href ng-show="!showCategoryInput" ng-click="showCategoryInput = true; addCategoryClick();" style="display: inline">
+                        <i class="fa fa-angle-double-right fa-1x"></i>Add a new category
                     </a>
+                    
+                    
+					
+					<!-- <input ng-show="showCategoryInput" class="form-control" placeholder="Category name"></input> -->
+					
+					<form id="category-formxx" ng-show="showCategoryInput" ng-submit="showCatgeoryInput = false; addCategory();">
+						<input id="new-categoryxx" class="form-control" placeholder="Category name" ng-model="newCategory" ng-disabled="saving" autofocus>
+					</form>
+					
+					                    
+                    
+                    <!-- <span style="color:bisque; display: inline;">Add</span> -->
+                    
+                    
                 </li>
-
-                <!-- <li class="sidebar-category">
-                    Category
-                </li>
-                <li>
-                    <a href="#">Dashboard</a>
-                </li>
-                <li>
-                    <a href="#">Shortcuts</a>
-                </li>
-
-                <li class="sidebar-category">
-                    Category 2
-                </li>
-                <li>
-                    <a href="#">Overview</a>
-                </li>
-                <li>
-                    <a href="#">Events</a>
+                
+                <!-- <div ng-show="showCatgeoryInput" class="popup"> -->
+                <div ng-hide="!showCatgeoryInput" class="popup">
+                <!-- <div class="popup"> -->
+                	<form id="category-form" ng-submit="showCatgeoryInput = false; addCategory();">
+						<input id="new-category" class="form-control" placeholder="Category name" ng-model="newCategory" ng-disabled="saving" autofocus>
+					</form>
+				</div>
+                
+                <!-- <li style="color:bisque; display: inline;">
+                    <span style="color:bisque; display: inline;"><a href>Add</a></span>
                 </li> -->
-
-
-                <!-- <li ng-repeat="x in projects" ng-show="x.category_id == 2">
-                	<a href="#">{{ x.name }}</a>
-                </li> -->
-
-                <!-- <li>
-                    <a href ng-click="tasksRemainingX(projects[1].id)">Check <p class="badge">{{projectTaskCounts[2]}}</p></a>
-                </li> -->
+                
+                
 
                 <div ng-repeat="category in categories">
                 	<li>
@@ -82,63 +93,17 @@
                 		
                 		<span style="color:bisque; font-size:25px;">
                 			<!-- <a href style="display: inline">+</a> -->
-                			
-                			<!-- <a href="#" style="display: inline" rel="popover" data-content='
-						<form id="mainForm" name="mainForm" method="post" action="">
-						    <p>
-						        <input type="text" id="txtName" name="txtName" placeholder="Add a new project"/>
-						    </p>
-						    <p>
-						        <input type="submit" name="Submit" value="Submit" />
-						    </p>
-						</form>
-						' data-placement="top" data-original-title="Fill in form">+</a> -->
-						
-						<!-- <a href ng-click="showPopup[category.id] = true" ng-init="showPopup[category.id] = false" style="display: inline">+</a> -->
+                		
 						<a href ng-click="showProjectInput[category.id] = true" ng-init="showProjectInput[category.id]" style="display: inline">+</a>
-						<!-- <button ng-click="showPopup = true">Show Popup</button> -->
-				        
 						
-                			
+						<!-- <button ng-click="showPopup = true">Show Popup</button> -->
+				        	
                 			{{ category.name}}
                 			
                 		</span>
                 		
 
-
-                		<!-- <div class="pull-left">
-                			{{ category.name}}
-                		</div> -->
-                		<!-- <div class="pull-right">
-                			<a href="#" class="btn btn-primary btn-small" rel="popover" data-content='
-						<form id="mainForm" name="mainForm" method="post" action="">
-						    <p>
-						        <input type="text" id="txtName" name="txtName" placeholder="Add a new project"/>
-						    </p>
-						    <p>
-						        <input type="submit" name="Submit" value="Submit" />
-						    </p>
-						</form>
-						' data-placement="top" data-original-title="Fill in form"><i class="icon-plus"></i></a>
-                		</div> -->
-
                 		<!-- <a href="#" class="btn btn-large btn-primary" rel="popover"></a> -->
-
-
-                		<!-- <div class="container">
-						    <div class="row" style="padding-top: 240px;"> <a href="#" class="btn btn-large btn-primary" rel="popover" data-content='
-						<form id="mainForm" name="mainForm" method="post" action="">
-						    <p>
-						        <input type="text" id="txtName" name="txtName" placeholder="Add a new project"/>
-						    </p>
-						    <p>
-						        <input type="submit" name="Submit" value="Submit" />
-						    </p>
-						</form>
-						' data-placement="top" data-original-title="Fill in form">+</a>
-
-						    </div>
-						</div> -->
 
                 	</li>
                 	
@@ -153,18 +118,7 @@
 					</div>
                 	
                 	<li ng-repeat="project in projects" ng-show="project.category_id == {{category.id}}">
-
-	                	<!-- <a href ng-click="loadTasks(project.id)">{{ project.name }} <p class="badge">12</p></a> -->
-	                	<a href ng-click="loadTasks(project.id)">{{ project.name }} <p class="badge">{{projectTaskCounts[project.id]}}</p></a>
-
-
-	                	<!-- <div class="progress">
-						  <div class="progress-bar progress-bar-success" role="progressbar" aria-valuenow="40" aria-valuemin="0" aria-valuemax="100" style="width: 40%">
-						    <span class="sr-only">40% Complete (success)</span>
-						  </div>
-						</div> -->
-
-
+	                	<a href ng-click="loadTasks(project.id)">{{ project.name }} <p class="badge" style="display: inline">{{projectTaskCounts[project.id]}}</p></a>
 	                </li>
                 </div>
 
@@ -192,16 +146,16 @@
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
           </button>
-          <!-- <a class="navbar-brand" href="#">Quick &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp</a> -->
+          <a class="navbar-brand" href="./index.html"><i class="fa fa-home fa-1x"></i></a>
         </div>
         <div id="navbar" class="navbar-collapse collapse">
           <ul class="nav navbar-nav">
             <!-- <li class="active"><a href="#">Home</a></li> -->
-            <li><a href="#about">Sign In</a></li>
+            <li><a href="#">Sign Out</a></li>
 
           </ul>
           <ul class="nav navbar-nav navbar-right">
-            <li><a href="#">Sign out</a></li>
+            <!-- <li><a href="#">Sign out</a></li> -->
           </ul>
         </div><!--/.nav-collapse -->
       </div>
