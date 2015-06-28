@@ -250,7 +250,8 @@
 
 	             </ul>
 	             <span><i>{{tasksRemaining()}} items left</i></span>
-	             <!-- <span><i>{{tasksRemainingX(1)}} items left</i></span> -->
+	             
+	             
 			</section>
 
 
@@ -265,6 +266,14 @@
 
         </div>
         <!-- /#page-content-wrapper -->
+        
+        <footer class="footer">
+	      <div class="container">
+	      	<div ng-show="selectedProjectId" class="text-center" ngCloak>
+	        	<p class="text-muted" style="font-size: 70%">Double click a task to edit it.</p>
+	        </div>
+	      </div>
+	    </footer>
 
     </div>
     <!-- /#wrapper -->
