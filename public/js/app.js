@@ -89,8 +89,6 @@ app.controller('mainCtrl', function($scope, Restangular, $resource, $http) {
 		$scope.reloadProjectTaskCounts();
 	};
 
-
-
 	$scope.employeeService = Restangular.all('employee');
 	$scope.categoryService = Restangular.all('category');
 	$scope.projectService = Restangular.all('project');
@@ -251,37 +249,6 @@ app.controller('mainCtrl', function($scope, Restangular, $resource, $http) {
 	    	 $scope.saving = false;
 	     });
 	};
-	
-//	$scope.addTask = function () {
-//
-//		var newTask = {
-//			name: $scope.newTask.trim(),
-//			done: false
-//		};
-//
-//		if (!newTask.name) {
-//			return;
-//		}
-//
-//		console.log('Adding task ' + newTask.name);
-//		$scope.saving = true;
-//
-//		$http.post('/api' + '/tasks', {
-//            name: newTask.name,
-//            description: 'test description',
-//            done: false,
-//            project_id: $scope.selectedProjectId
-//        }).
-//	   success(function(data, status, headers) {
-//	   		console.log('task added');
-//   			$scope.newTask = '';
-//   			$scope.loadTasks($scope.selectedProjectId);
-//   			$scope.taskDataChanged();
-//	     }).
-//	     finally(function() {
-//	    	 $scope.saving = false;
-//	     });
-//	};
 
 	$scope.toggleTaskDone = function (task) {
 		console.log('Toggling task: ' + task.name + " " + task.done);
@@ -296,7 +263,34 @@ app.controller('mainCtrl', function($scope, Restangular, $resource, $http) {
 			$scope.taskDataChanged();
 		});
 	};
+	
+	$scope.editedTask = null;
+	$scope.startEditingTask = function(task) {
+		console.log('start editing task: ' + task.id + ' ' + task.name);
+		
+		task.editing=true;
+        $scope.editedTask = task;
+    }
+        
+    $scope.doneEditingTask = function(task) {
+    	if (!angular.isUndefined(task)) {
+    		console.log('done editing task: ' + task.id + ' ' + task.name);
+        	// push to server
+    		
+    		$scope.taskService.get(task.id).then(function(response){
+    			response.name = task.name;
+    			response.save();
+    			$scope.taskDataChanged();
+    		}).
+    		finally(function() {
+	   	    	task.editing=false;
+	   	     });
+    			
+    	}
+    	
+        $scope.editedTask = null;
 
+    }
 
 	$scope.removeTask = function (task) {
 		console.log('Removing task: ' + task.name);
@@ -327,9 +321,7 @@ app.controller('mainCtrl', function($scope, Restangular, $resource, $http) {
 		console.log("employee change on task: " + task.id + " ==>" + employeeId);
 
 		$scope.taskService.get(task.id).then(function(response){
-			console.log(response);
 			response.employee_id = parseInt(employeeId);
-			console.log(response);
 			response.save();
 		});
 	};
