@@ -22,7 +22,7 @@ psql -d production -U sylvain --password
 - Postgres used for the database. Since Hibernate is used for querying the database, it should be quite a simple change to swap the underlying database to something else like MySQL, Oracle, etc.
 - Maven is used for dependency management.
 
-# Please obtain a Google maps developer key (https://developers.google.com/maps/) and replace the one in /public/index.html
+Please obtain a Google maps developer key (https://developers.google.com/maps/) and replace the one in /public/index.html
 
 # Credits
 The landing page uses the template from http://startbootstrap.com/template-overviews/grayscale/
