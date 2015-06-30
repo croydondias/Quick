@@ -11,3 +11,4 @@ buildNumber.properties
 .project
 build/
 /bin/
+.DS_Store
