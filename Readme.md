@@ -9,6 +9,7 @@ mvn spring-boot:run
 db: production
 user: Sylvain
 pass: dubai
+You can change these properties in [application.yml](src/main/resources/application.yml)
 
 psql -U postgres
 psql -d production -U sylvain --password
@@ -30,18 +31,18 @@ The app uses the base template from http://startbootstrap.com/template-overviews
 
 
 # TODO
-- Remove TaskAlreadyExistsException
-- Check Task/Project repo custom hibernate functions and optimize
-- Add server IP to html/javascript files dynamically
+- [] Remove TaskAlreadyExistsException
+- [] Check Task/Project repo custom hibernate functions and optimize
+- [] Add server IP to html/javascript files dynamically
 
-- Remove unnecessary html files
-- Format HTML files and remove commented out code
+- [] Remove unnecessary html files
+- [] Format HTML files and remove commented out code
 
-- Comment java code
-- Comment html code
-- Comment javascript code
+- [] Comment java code
+- [] Comment html code
+- [] Comment javascript code
 
-- Write instructions on how to setup database and run application
+- [] Write instructions on how to setup database and run application
 
 # Future tasks
 - SSL support
