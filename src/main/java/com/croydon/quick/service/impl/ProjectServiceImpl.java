@@ -37,11 +37,13 @@ public class ProjectServiceImpl implements ProjectService {
 	@Override
 	@Transactional
 	public Project create(Project project) throws ProjectAlreadyExistsException {
-		Project existing = projectRepository.findOne(project.getId());
-	    if (existing != null) {
-	        throw new ProjectAlreadyExistsException(
-	                String.format("There already exists a project with id=%s", project.getId()));
-	    }
+		if (project.getId() != null) {
+			Project existing = projectRepository.findOne(project.getId());
+		    if (existing != null) {
+		        throw new ProjectAlreadyExistsException(
+		                String.format("There already exists a project with id=%s", project.getId()));
+		    }
+		}
 	    return projectRepository.save(project);
 	}
 	

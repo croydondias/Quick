@@ -32,11 +32,13 @@ public class TaskServiceImpl implements TaskService {
 	@Override
 	@Transactional
 	public Task create(Task task) throws TaskAlreadyExistsException {
-		Task existing = taskRepository.findOne(task.getId());
-	    if (existing != null) {
-	        throw new TaskAlreadyExistsException(
-	                String.format("There already exists a task with id=%s", task.getId()));
-	    }
+		if (task.getId() != null) {
+			Task existing = taskRepository.findOne(task.getId());
+		    if (existing != null) {
+		        throw new TaskAlreadyExistsException(
+		                String.format("There already exists a task with id=%s", task.getId()));
+		    }
+		}
 	    return taskRepository.save(task);
 	}
 	

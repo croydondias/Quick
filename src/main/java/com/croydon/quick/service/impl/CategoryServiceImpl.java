@@ -32,11 +32,13 @@ public class CategoryServiceImpl implements CategoryService {
 	@Override
 	@Transactional
 	public Category create(Category category) throws CategoryAlreadyExistsException {
-		Category existing = categoryRepository.findOne(category.getId());
-	    if (existing != null) {
-	        throw new CategoryAlreadyExistsException(
-	                String.format("There already exists a category with id=%s", category.getId()));
-	    }
+		if (category.getId() != null) {
+			Category existing = categoryRepository.findOne(category.getId());
+		    if (existing != null) {
+		        throw new CategoryAlreadyExistsException(
+		                String.format("There already exists a category with id=%s", category.getId()));
+		    }
+		}
 	    return categoryRepository.save(category);
 	}
 	
