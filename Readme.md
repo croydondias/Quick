@@ -27,7 +27,7 @@ The app uses the base template from http://startbootstrap.com/template-overviews
 
 
 # TODO
-- [] Ability to register new users
+- [x] Ability to register new users
 - [] Authentication
 - [] User sign in and redirect
 - [] Prevent unautorised access
