@@ -6,16 +6,12 @@ mvn spring-boot:run
 
 
 # Database settings
-db: production
-user: Sylvain
-pass: dubai
 You can change these properties in [application.yml](src/main/resources/application.yml)
 
 psql -U postgres
 psql -d production -U sylvain --password
 
 # Technology Stack
-
 - Spring boot server side
 -- REST api
 - UI Developed completely using Bootstrap and jquery.
