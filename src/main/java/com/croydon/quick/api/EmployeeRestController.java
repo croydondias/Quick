@@ -35,8 +35,8 @@ public class EmployeeRestController {
 	}
 
 	@RequestMapping(method = RequestMethod.POST)
-	public Employee create(@RequestBody Employee user) throws EmployeeAlreadyExistsException {
-		return employeeService.create(user);
+	public Employee create(@RequestBody Employee employee) throws EmployeeAlreadyExistsException {
+		return employeeService.create(employee);
 	}
 
 	@RequestMapping(method = RequestMethod.DELETE, value = "{id}")
