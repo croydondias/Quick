@@ -32,11 +32,13 @@ public class EmployeeServiceImpl implements EmployeeService {
 	@Override
 	@Transactional
 	public Employee create(Employee employee) throws EmployeeAlreadyExistsException {
-		Employee existing = employeeRepository.findOne(employee.getId());
-	    if (existing != null) {
-	        throw new EmployeeAlreadyExistsException(
-	                String.format("There already exists an employee with id=%s", employee.getId()));
-	    }
+		if (employee.getId() != null) {
+			Employee existing = employeeRepository.findOne(employee.getId());
+		    if (existing != null) {
+		        throw new EmployeeAlreadyExistsException(
+		                String.format("There already exists an employee with id=%s", employee.getId()));
+		    }
+		}
 	    return employeeRepository.save(employee);
 	}
 	
@@ -56,5 +58,9 @@ public class EmployeeServiceImpl implements EmployeeService {
 	public void delete(Long id) {
 		employeeRepository.delete(id);
 	}
-
+	
+	@Override
+	public List<Employee> findByEmail(String email) {
+		return employeeRepository.findByEmail(email);
+	}
 }

@@ -146,47 +146,62 @@
     <section id="signup" class="content-section text-center">
       <div class="signup-section">
         <div class="container">
+        
+        <!-- <center>
+	        <div id="signup-warning-alert" class="alert alert-warning fade in" style="width: 50%;">
+		        <a href="#" class="close" data-dismiss="alert">×</a>
+		        <strong>Warning!</strong> There was a problem during registering. Please try again.
+		   	</div>
+		   	<div id="signup-success-alert" class="alert alert-success fade in" style="width: 50%;">
+		        <a href="#" class="close" data-dismiss="alert">×</a>
+		        You have <strong>successfully</strong> registered.
+		   	</div>
+	   	</center> -->
+        
           <div class="row">
               <div class="col-lg-8 col-lg-offset-2">
                   <h2>Register for free</h2>
                   <p>Register and start using the app in minutes</p>
 
-                  <form class="form-horizontal" method="POST" action="http://localhost:8080/api/login/register">
-                  <div class="row">
-                    <div class="col-lg-3">
-                      <div class="input-group">
-                        <input required="" id="firstName" name="firstName" type="text" class="form-control" placeholder="First name">
-                      </div><!-- /input-group -->
-                    </div><!-- /.col-lg-6 -->
-                    <div class="col-lg-3">
-                      <div class="input-group">
-                        <input required="" id="lastName" name="lastName" type="text" class="form-control" placeholder="Last name">
-                      </div><!-- /input-group -->
-                    </div><!-- /.col-lg-6 -->
-                    <div class="col-lg-3">
-                      <div class="input-group">
-                        <input required="" id="email" name="email" type="text" class="form-control" placeholder="Email">
-                      </div><!-- /input-group -->
-                    </div><!-- /.col-lg-6 -->
-                    <div class="col-lg-3">
-                      <div class="input-group">
-                        <input required="" id="password" name="password" type="password" class="form-control" placeholder="Password">
-                      </div><!-- /input-group -->
-                    </div><!-- /.col-lg-6 -->
-
-                  </div><!-- /.row -->
-
-                  <br/><br/>
-                  <center>
-                    <div class="input-group">
-                      <button id="register" type="submit" value="Login" class="btn btn-default">Submit</button>
-                    </div><!-- /input-group -->
-                  </center>
+                  <form id="signup-form" class="form-horizontal" method="POST" action="http://localhost:8080/api/login/register">
+	                  <div class="row">
+	                    <div class="col-lg-3">
+	                      <div class="input-group">
+	                        <input required="" id="firstName" name="firstName" type="text" class="form-control" placeholder="First name">
+	                      </div><!-- /input-group -->
+	                    </div><!-- /.col-lg-6 -->
+	                    <div class="col-lg-3">
+	                      <div class="input-group">
+	                        <input required="" id="lastName" name="lastName" type="text" class="form-control" placeholder="Last name">
+	                      </div><!-- /input-group -->
+	                    </div><!-- /.col-lg-6 -->
+	                    <div class="col-lg-3">
+	                      <div class="input-group">
+	                        <input required="" id="email" name="email" type="text" class="form-control" placeholder="Email">
+	                      </div><!-- /input-group -->
+	                    </div><!-- /.col-lg-6 -->
+	                    <div class="col-lg-3">
+	                      <div class="input-group">
+	                        <input required="" id="password" name="password" type="password" class="form-control" placeholder="Password">
+	                      </div><!-- /input-group -->
+	                    </div><!-- /.col-lg-6 -->
+	
+	                  </div><!-- /.row -->
+	
+	                  <br/><br/>
+	                  <center>
+	                    <div class="input-group">
+	                      <button id="register" type="submit" value="Login" class="btn btn-default">Submit</button>
+	                    </div><!-- /input-group -->
+	                  </center>
                 </form>
 
 
 
               </div>
+              
+              	
+              
           </div>
         </div>
       </div>
@@ -214,6 +229,41 @@
 
     <!-- Custom Theme JavaScript -->
     <script src="js/grayscale.js"></script>
+    
+    <!-- <script type="text/javascript">
+	    var frm = $('#signup-form');
+	    frm.submit(function (ev) {
+	        $.ajax({
+	            type: frm.attr('method'),
+	            url: frm.attr('action'),
+	            data: frm.serialize(),
+	            success: function (data) {
+	                alert('ok');
+	            }
+	        });
+	
+	        ev.preventDefault();
+	    });
+	</script> -->
+	
+	<script type="text/javascript">
+	    var frm = $('#signup-form');
+	    frm.submit(function (ev) {
+	        $.ajax({
+	            type: frm.attr('method'),
+	            url: frm.attr('action'),
+	            data: frm.serialize(),
+	            error: function (jqXHR, textStatus, errorMessage) {
+	            	alert(jqXHR.responseText);
+	            },
+	            success: function (data) {
+	                alert('Successfully registered');
+	            }
+	        });
+	
+	        ev.preventDefault();
+	    });
+	</script>
 
 </body>
 

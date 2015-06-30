@@ -11,6 +11,7 @@ public class Employee {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "employee_seq_gen")
+	//@GeneratedValue(strategy = GenerationType.AUTO, generator = "employee_seq_gen")
 	@SequenceGenerator(name = "employee_seq_gen", sequenceName = "employee_id_seq")
 	private Long id;
 	private String firstName;

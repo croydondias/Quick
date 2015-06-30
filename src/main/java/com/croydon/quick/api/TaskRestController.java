@@ -21,7 +21,7 @@ import com.croydon.quick.service.TaskService;
 @RestController
 @RequestMapping("/api/task")
 public class TaskRestController {
-
+	
 	@Autowired
 	private TaskService taskService;
 	
