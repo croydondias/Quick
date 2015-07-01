@@ -9,14 +9,6 @@ CREATE EXTENSION chkpass;
 
 ## Login as Sylvain user and run the following
 
-
-drop table task;
-drop table project;
-drop table category;
-drop table employee;
-
-
-
 CREATE TABLE employee (
    id   BIGSERIAL PRIMARY KEY,
    first_name    VARCHAR(128) NOT NULL,
