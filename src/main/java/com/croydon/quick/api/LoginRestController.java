@@ -28,13 +28,20 @@ public class LoginRestController {
 	@Autowired
 	private EmployeeService employeeService;
 	
-//	@RequestMapping(method = RequestMethod.POST, value = "/register")
-//	public Employee register(@RequestBody Employee employee) throws EmployeeAlreadyExistsException {
-//		LOG.info(String.format("Register: %s", employee));
-//		
-//		return null;
-//		//return employeeService.create(user);
-//	}
+	@RequestMapping(method = RequestMethod.POST)
+	public @ResponseBody Employee login(HttpServletRequest request, HttpServletResponse response) throws IllegalArgumentException {
+		final String email = request.getParameter("email");
+		final String password = request.getParameter("password");
+		
+		if (email == null || email.isEmpty()) {
+			throw new IllegalArgumentException("Email cannot be blank");
+		}
+		if (password == null || password.isEmpty()) {
+			throw new IllegalArgumentException("Password cannot be blank");
+		}
+		
+		return null;
+	}
 	
 	@RequestMapping(method = RequestMethod.POST, value = "/register")
 	public @ResponseBody Employee register(HttpServletRequest request, HttpServletResponse response) throws IllegalArgumentException, EmployeeAlreadyExistsException {
@@ -60,11 +67,17 @@ public class LoginRestController {
 			throw new IllegalArgumentException("Password cannot be blank");
 		}
 		
-		List<Employee> employeesWithTheSameEmail = employeeService.findByEmail(employee.getEmail());
-		LOG.info(employeesWithTheSameEmail);
-		if (employeesWithTheSameEmail.size() > 0) {
+//		List<Employee> employeesWithTheSameEmail = employeeService.findByEmail(employee.getEmail());
+//		LOG.info(employeesWithTheSameEmail);
+//		if (employeesWithTheSameEmail.size() > 0) {
+//			throw new EmployeeAlreadyExistsException("That email already exists.");
+//		}
+		
+		if (employeeService.findByEmail(employee.getEmail()) != null) {
 			throw new EmployeeAlreadyExistsException("That email already exists.");
 		}
+		
+		
 		
 		return employeeService.create(employee);
 	}

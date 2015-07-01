@@ -9,7 +9,8 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface EmployeeRepository extends PagingAndSortingRepository<Employee, Long> {
-	List<Employee> findByEmail(String email);
+	//List<Employee> findByEmail(String email);
+	Employee findByEmail(String email);
 }
 
 //@RepositoryRestResource(collectionResourceRel = "employee", path = "employee", exported = true)

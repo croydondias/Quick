@@ -13,5 +13,6 @@ public interface EmployeeService {
 	Employee create(Employee employee) throws EmployeeAlreadyExistsException;
 	Employee save(Employee employee) throws EmployeeDoesntExistException;
 	void delete(Long id);
-	List<Employee> findByEmail(String email);
+	//List<Employee> findByEmail(String email);
+	Employee findByEmail(String email);
 }
