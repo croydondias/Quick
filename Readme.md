@@ -30,7 +30,7 @@ The app uses the base template from http://startbootstrap.com/template-overviews
 - [x] Ability to register new users
 - [] Authentication
 - [] User sign in and redirect
-- [] Prevent unautorised access
+- [] Prevent unauthorised access
 - [] Remove TaskAlreadyExistsException
 - [] Check Task/Project repo custom hibernate functions and optimize
 - [] Add server IP to html/javascript files dynamically
