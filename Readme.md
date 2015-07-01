@@ -8,6 +8,8 @@ mvn spring-boot:run
 # Database settings
 You can change these properties in [application.yml](src/main/resources/application.yml)
 
+Run [production.sql](db/production.sql) to create the initial tables and some data.
+
 psql -U postgres
 psql -d production -U sylvain --password
 
