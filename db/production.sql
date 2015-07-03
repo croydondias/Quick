@@ -39,16 +39,13 @@ CREATE TABLE task (
    done			  BOOLEAN DEFAULT FALSE NOT NULL
 );
 
-insert into employee (first_name, last_name, email, password) VALUES ('Magali', 'Mouquet', 'mm@emiratesreit.com', 'abc123');
-insert into employee (first_name, last_name, email, password) VALUES ('Sylvain', 'Vieujot', 'sv@emiratesreit.com', 'abc123');
-insert into employee (first_name, last_name, email, password) VALUES ('Hannah', 'Jeffrey', 'hj@emiratesreit.com', 'abc123');
-insert into employee (first_name, last_name, email, password) VALUES ('James', 'Anderson', 'ja@emiratesreit.com', 'abc123');
-insert into employee (first_name, last_name, email, password) VALUES ('Arsheen', 'Saulat', 'as@emiratesreit.com', 'abc123');
-insert into employee (first_name, last_name, email, password) VALUES ('Croydon', 'Dias', 'croydondias@gmail.com', 'abc123');
-insert into employee (first_name, last_name, email, password) VALUES ('Sergio', 'Artalejo', 'sa@gmail.com', 'abc123');
-insert into employee (first_name, last_name, email, password) VALUES ('Harry', 'Potter', 'wonderboy@gmail.com', 'abc123');
-insert into employee (first_name, last_name, email, password) VALUES ('Hermione', 'Granger', 'muggle@hpworld.com', 'abc123');
-insert into employee (first_name, last_name, email, password) VALUES ('Ron', 'Burgundy', 'ron.burgundy@news.com', 'abc123');
+# password is set to 'abc123'
+insert into employee (first_name, last_name, email, password) VALUES ('Magali', 'Mouquet', 'mm@emiratesreit.com', '$2a$10$QhT1U93tK4BT6e3XXGPOJeGqmQSphfdP4ARZfPCsLCJUPpenkrNIe');
+insert into employee (first_name, last_name, email, password) VALUES ('Sylvain', 'Vieujot', 'sv@emiratesreit.com', '$2a$10$QhT1U93tK4BT6e3XXGPOJeGqmQSphfdP4ARZfPCsLCJUPpenkrNIe');
+insert into employee (first_name, last_name, email, password) VALUES ('Hannah', 'Jeffrey', 'hj@emiratesreit.com', '$2a$10$QhT1U93tK4BT6e3XXGPOJeGqmQSphfdP4ARZfPCsLCJUPpenkrNIe');
+insert into employee (first_name, last_name, email, password) VALUES ('James', 'Anderson', 'ja@emiratesreit.com', '$2a$10$QhT1U93tK4BT6e3XXGPOJeGqmQSphfdP4ARZfPCsLCJUPpenkrNIe');
+insert into employee (first_name, last_name, email, password) VALUES ('Arsheen', 'Saulat', 'as@emiratesreit.com', '$2a$10$QhT1U93tK4BT6e3XXGPOJeGqmQSphfdP4ARZfPCsLCJUPpenkrNIe');
+insert into employee (first_name, last_name, email, password) VALUES ('Croydon', 'Dias', 'croydondias@gmail.com', '$2a$10$QhT1U93tK4BT6e3XXGPOJeGqmQSphfdP4ARZfPCsLCJUPpenkrNIe');
 
 insert into category (name) VALUES('Buildings');
 insert into category (name) VALUES('Work departments');

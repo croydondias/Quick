@@ -41,7 +41,7 @@
                     <i class="fa fa-bars"></i>
                 </button>
                 <a class="navbar-brand page-scroll" href="#page-top">
-                    <i class="fa fa-play-circle"></i>  <!--<span class="light">Start</span>--> Quick
+                    <i class="fa fa-play-circle"></i>  Quick
                 </a>
             </div>
 
@@ -163,7 +163,7 @@
                   <h2>Register for free</h2>
                   <p>Register and start using the app in minutes</p>
 
-                  <form id="signup-form" class="form-horizontal" method="POST" action="http://localhost:8080/api/login/register">
+                  <form id="signup-form" class="form-horizontal" method="POST" action="http://localhost:8080/login/register">
 	                  <div class="row">
 	                    <div class="col-lg-3">
 	                      <div class="input-group">
@@ -211,7 +211,7 @@
     <!-- Footer -->
     <footer>
         <div class="container text-center">
-            <p>Copyright &copy; Croydon Dias 2014</p>
+            <p>Copyright &copy; Croydon Dias 2015</p>
         </div>
     </footer>
 
@@ -242,6 +242,7 @@
 	            },
 	            success: function (data) {
 	                alert('Successfully registered');
+	                window.location = '/signin.html';
 	            }
 	        });
 	

@@ -30,13 +30,16 @@ The app uses the base template from http://startbootstrap.com/template-overviews
 
 # TODO
 - [x] Ability to register new users
-- [] Authentication
-- [] User sign in and redirect
-- [] Prevent unauthorised access
+- [x] Authentication
+- [x] User sign in and redirect
+- [x] Prevent unauthorised access
+- [] Sanitize register form
+- [] Sanitize sign in form
 - [] Remove TaskAlreadyExistsException
 - [] Check Task/Project repo custom hibernate functions and optimize
 - [] Add server IP to html/javascript files dynamically
 
+- [] Resize images to a smaller size for faster loading
 - [] Remove unnecessary html files
 - [] Format HTML files and remove commented out code
 
@@ -44,7 +47,7 @@ The app uses the base template from http://startbootstrap.com/template-overviews
 - [] Comment html code
 - [] Comment javascript code
 
-- [] Write instructions on how to setup database and run application
+- [x] Write instructions on how to setup database and run application
 
 # Future tasks
 - SSL support
