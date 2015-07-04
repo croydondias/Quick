@@ -1,16 +1,12 @@
 package com.croydon.quick.controller;
 
-import java.util.List;
-
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
-import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -33,30 +29,6 @@ public class LoginRestController {
 	
 	@Autowired
 	private PasswordEncoder passwordEncoder;
-	
-//	@RequestMapping(method = RequestMethod.GET)
-//	public String helloHtml(Model model) {
-//        return "signin.html";
-//    }
-	
-	@RequestMapping(method = RequestMethod.POST, value = "/process")
-	public @ResponseBody Employee login(HttpServletRequest request, HttpServletResponse response) throws IllegalArgumentException {
-		final String email = request.getParameter("email");
-		final String password = request.getParameter("password");
-		
-		
-		
-		if (email == null || email.isEmpty()) {
-			throw new IllegalArgumentException("Email cannot be blank");
-		}
-		if (password == null || password.isEmpty()) {
-			throw new IllegalArgumentException("Password cannot be blank");
-		}
-		
-		LOG.info(String.format("Checking login: %s %s", email, password));
-		
-		return null;
-	}
 	
 	@RequestMapping(method = RequestMethod.POST, value = "/register")
 	public @ResponseBody Employee register(HttpServletRequest request, HttpServletResponse response) throws IllegalArgumentException, EmployeeAlreadyExistsException {
