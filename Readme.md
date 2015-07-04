@@ -2,11 +2,17 @@
 export MAVEN_OPTS=-Xmx1024m -XX:MaxPermSize=128M
 
 # To run the application locally
+
+1) Build and install all dependencies 
+mvn install 
+
+2) Start the application
+cd quick-web/
 mvn spring-boot:run
 
 
 # Database settings
-You can change these properties in [application.yml](src/main/resources/application.yml)
+You can change these properties in [application.yml](quick-web/src/main/resources/application.yml)
 
 Run [production.sql](db/production.sql) to create the initial tables and some data.
 
@@ -33,6 +39,7 @@ The app uses the base template from http://startbootstrap.com/template-overviews
 - [x] Authentication
 - [x] User sign in and redirect
 - [x] Prevent unauthorised access
+- [] Convert to a multi module maven project
 - [] Sanitize register form
 - [] Sanitize sign in form
 - [] Remove TaskAlreadyExistsException
@@ -51,6 +58,7 @@ The app uses the base template from http://startbootstrap.com/template-overviews
 
 # Future tasks
 - SSL support
+- Use flywayDB for management of database sql changes
 - Checks for sql injection
 - Check for OWASP vulnerabilities
 - Ability to delete Categories and Projects
@@ -58,3 +66,4 @@ The app uses the base template from http://startbootstrap.com/template-overviews
 - Status page for users to check current/past system status (https://status.status.io/)
 - Responsive website that works on mobile/tablets
 - iOS/Android apps using the REST API
+
