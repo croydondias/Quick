@@ -198,7 +198,7 @@
 	                    </div><!-- /.col-lg-6 -->
 	                    <div class="col-lg-3">
 	                      <div class="input-group">
-	                        <input required="" id="email" name="email" type="text" class="form-control" placeholder="Email">
+	                        <input required="" id="email" name="email" type="email" class="form-control" placeholder="Email">
 	                      </div><!-- /input-group -->
 	                    </div><!-- /.col-lg-6 -->
 	                    <div class="col-lg-3">
@@ -269,12 +269,8 @@
 	            		/* If null or empty, then use a default message */
 	            		msg = "There was a problem during registering. Please try again.";
 	            	}
-	            	/* $("#signup-warning-alert").html("<strong>Warning</strong> " + msg); */
-	            	/* $("#signup-warning-alert-msg").html("<strong>Warning</strong> " + msg); */
 	            	$("#signup-warning-alert-msg").html(msg);
-	            	
 	            	$("#signup-warning-alert").show();
-	            	//alert(msg);
 	            },
 	            success: function (data) {
 	            	$("#signup-success-alert").show();
