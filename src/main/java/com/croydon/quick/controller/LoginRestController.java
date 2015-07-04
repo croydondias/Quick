@@ -81,12 +81,6 @@ public class LoginRestController {
 			throw new IllegalArgumentException("Password cannot be blank");
 		}
 		
-//		List<Employee> employeesWithTheSameEmail = employeeService.findByEmail(employee.getEmail());
-//		LOG.info(employeesWithTheSameEmail);
-//		if (employeesWithTheSameEmail.size() > 0) {
-//			throw new EmployeeAlreadyExistsException("That email already exists.");
-//		}
-		
 		if (employeeService.findByEmail(employee.getEmail()) != null) {
 			throw new EmployeeAlreadyExistsException("That email already exists.");
 		}
