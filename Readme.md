@@ -28,7 +28,7 @@ psql -U postgres
 psql -d production -U sylvain --password
 
 # Technology Stack
-- Spring boot server side
+- [Spring boot](http://projects.spring.io/spring-boot/) is used which makes writing server side code a piece of cake and it handles a lot of the menial tasks with ease.
 -- REST api
 - UI Developed completely using Bootstrap and jquery.
 - Angular JS is used in the UI to talk to the backend via the REST api provided by the server.
