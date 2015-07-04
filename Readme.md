@@ -15,6 +15,8 @@ cd quick-web/
 mvn spring-boot:run
 ```
 The app runs on localhost:8080/
+If you want to change the port that the server runs on, you will need to make
+changes in [application.yml](quick-web/src/main/resources/application.yml) and [app.js](quick-web/public/js/app.js)
 
 # Database settings
 You can change these properties in [application.yml](quick-web/src/main/resources/application.yml)
