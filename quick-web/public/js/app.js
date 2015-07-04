@@ -8,10 +8,6 @@ app.config(function(RestangularProvider) {
         // Note that we run everything on the localhost
 });
 
-//app.config(function (HateoasInterceptorProvider) {
-//    HateoasInterceptorProvider.transformAllResponses();
-//});
-
 (function() {
 	 angular.module("tasks").factory("Employees",
 	 ["Restangular", function(Restangular) {

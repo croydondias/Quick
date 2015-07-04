@@ -1,7 +1,6 @@
 package com.croydon.quick;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
@@ -9,28 +8,17 @@ import org.springframework.boot.context.properties.EnableConfigurationProperties
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.core.env.Environment;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
-import org.springframework.security.config.annotation.authentication.configurers.GlobalAuthenticationConfigurerAdapter;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
-import org.springframework.security.core.authority.AuthorityUtils;
-import org.springframework.security.core.userdetails.User;
-import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.core.userdetails.UserDetailsService;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
-import org.springframework.security.web.authentication.SimpleUrlAuthenticationSuccessHandler;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.croydon.quick.config.RESTAuthenticationFailureHandler;
 import com.croydon.quick.config.RESTAuthenticationSuccessHandler;
-import com.croydon.quick.domain.Employee;
-import com.croydon.quick.domain.EmployeeRepository;
 
 @EnableConfigurationProperties
 @Configuration
@@ -47,37 +35,6 @@ public class Application {
         SpringApplication.run(Application.class, args);
     }
 
-}
-
-@Configuration
-class WebSecurityConfiguration extends GlobalAuthenticationConfigurerAdapter {
-
-	@Autowired
-	EmployeeRepository accountRepository;
-
-	@Override
-	public void init(AuthenticationManagerBuilder auth) throws Exception {
-		auth.userDetailsService(userDetailsService());
-	}
-
-	@Bean
-	UserDetailsService userDetailsService() {
-		return new UserDetailsService() {
-
-			@Override
-			public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-				Employee account = accountRepository.findByEmail(username);
-				if (account != null) {
-					return new User(account.getEmail(), account.getPassword(), true, true, true, true,
-							AuthorityUtils.createAuthorityList("USER"));
-				} else {
-					throw new UsernameNotFoundException(
-							"Could not find the user with email address '" + username + "'");
-				}
-			}
-
-		};
-	}
 }
  
 @EnableWebSecurity
