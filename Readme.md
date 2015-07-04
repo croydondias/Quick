@@ -60,7 +60,7 @@ The app uses the base template from http://startbootstrap.com/template-overviews
 - Check for OWASP vulnerabilities
 - Ability to delete Categories and Projects
 - Document the API
-- Status page for users to check current/past system status (https://status.status.io/)
+- Status page for users to check [current/past system status](https://status.status.io/)
 - Responsive website that works on mobile/tablets
 - iOS/Android apps using the REST API
 
