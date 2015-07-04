@@ -6,13 +6,6 @@ app.config(function(RestangularProvider) {
     RestangularProvider.setBaseUrl(
         'http://localhost:8080/api');
         // Note that we run everything on the localhost
-
-//    RestangularProvider.setRequestInterceptor(function(elem, operation) {
-//  	  if (operation === "remove") {
-//  	     return undefined;
-//  	  }
-//  	  return elem;
-//  	});
 });
 
 //app.config(function (HateoasInterceptorProvider) {
@@ -362,6 +355,7 @@ app.controller('mainCtrl', function($scope, Restangular, $resource, $http) {
 	$scope.$watch('$viewContentLoaded', function(){
 	    // do something
 		console.log('Page has finished loading..');
+		
 		
 //		$('a[rel=popover]').popover({
 //	        html: 'true',
