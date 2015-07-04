@@ -4,12 +4,15 @@ export MAVEN_OPTS=-Xmx1024m -XX:MaxPermSize=128M
 # To run the application locally
 
 1) Build and install all dependencies 
-mvn install 
+```
+mvn install
+``` 
 
 2) Start the application
+```
 cd quick-web/
 mvn spring-boot:run
-
+```
 The app runs on localhost:8080/
 
 # Database settings
@@ -39,23 +42,14 @@ The app uses the base template from http://startbootstrap.com/template-overviews
 - [x] User sign in and redirect
 - [x] Prevent unauthorised access
 - [x] Convert to a multi module maven project
-- [] Sanitize register form
-- [] Sanitize sign in form
-- [] Remove TaskAlreadyExistsException
-- [] Check Task/Project repo custom hibernate functions and optimize
-- [] Add server IP to html/javascript files dynamically
-
-- [] Resize images to a smaller size for faster loading
-- [] Remove unnecessary html files
-- [] Format HTML files and remove commented out code
-
-- [] Comment java code
-- [] Comment html code
-- [] Comment javascript code
-
+- [x] Resize images to a smaller size for faster loading
+- [x] Remove unnecessary html files
+- [x] Format HTML files and remove commented out code
 - [x] Write instructions on how to setup database and run application
 
 # Future tasks
+- Sanitize register/sign in form to ensure a correct email is entered
+- Ability to delete categories and projects
 - SSL support
 - Use flywayDB for management of database sql changes
 - Checks for sql injection
