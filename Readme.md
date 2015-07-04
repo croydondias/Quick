@@ -6,7 +6,7 @@ export MAVEN_OPTS=-Xmx1024m -XX:MaxPermSize=128M
 
 2) Build and install all dependencies 
 ```
-mvn install
+mvn clean install
 ``` 
 
 2) Start the application
