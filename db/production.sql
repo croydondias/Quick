@@ -39,6 +39,7 @@ CREATE TABLE task (
    done			  BOOLEAN DEFAULT FALSE NOT NULL
 );
 
+## Insert some dummy data to populate the db
 # password is set to 'abc123'
 insert into employee (first_name, last_name, email, password) VALUES ('Magali', 'Mouquet', 'mm@emiratesreit.com', '$2a$10$QhT1U93tK4BT6e3XXGPOJeGqmQSphfdP4ARZfPCsLCJUPpenkrNIe');
 insert into employee (first_name, last_name, email, password) VALUES ('Sylvain', 'Vieujot', 'sv@emiratesreit.com', '$2a$10$QhT1U93tK4BT6e3XXGPOJeGqmQSphfdP4ARZfPCsLCJUPpenkrNIe');
