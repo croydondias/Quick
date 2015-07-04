@@ -136,14 +136,12 @@
 	            data: frm.serialize(),
 	            error: function (jqXHR, textStatus, errorMessage) {
 	            	console.log('login failure: ' + jqXHR.responseText);
-	            	//alert(jqXHR.responseText);
-	            	
 	            	if (jqXHR.status === 401) { // HTTP Status 401: Unauthorized
 	            		console.log('401 error');
 	            		alert('Incorrect email / password');
 			 
 					} else {
-						alert('Houston, we have a problem...');
+						alert('There was a problem with your registration. Please try again.');
 					}
 	            },
 	            success: function (data) {

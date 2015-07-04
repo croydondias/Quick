@@ -15,7 +15,6 @@
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.3.8/angular-route.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/underscore.js/1.7.0/underscore.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/restangular/1.4.0/restangular.js"></script>
-    <!--<script src="js/angular-hateoas.js"></script>-->
 
     <!-- Bootstrap Core CSS -->
     <link href="css/bootstrap.min.css" rel="stylesheet">
@@ -40,76 +39,28 @@
         <div id="sidebar-wrapper">
             <ul class="sidebar-nav">
                 <li class="sidebar-brand">
-                    <!-- <a href="#">
-                        Add a new category 
-                    </a> -->
-                    
-                    <!-- <a href="#" style="display: inline">
-                        <i class="fa fa-angle-double-right fa-1x"></i>Add a new category
-                    </a> -->
-                    
-                    <!-- <a href ng-click="showCategoryInput = true; addCategoryClick();" ng-init="showCategoryInput" style="display: inline">
-                        <i class="fa fa-angle-double-right fa-1x"></i>Add a new category
-                    </a> -->
-                    
                     <a href ng-show="!showCategoryInput" ng-click="showCategoryInput = true; addCategoryClick();" style="display: inline">
                         <i class="fa fa-angle-double-right fa-1x"></i>Add a new category
                     </a>
                     
-                    
-					
-					<!-- <input ng-show="showCategoryInput" class="form-control" placeholder="Category name"></input> -->
-					
 					<form id="category-formxx" ng-show="showCategoryInput" ng-submit="showCatgeoryInput = false; addCategory();">
 						<input id="new-categoryxx" class="form-control" placeholder="Category name" ng-model="newCategory" ng-disabled="saving" autofocus>
 					</form>
-					
-					                    
-                    
-                    <!-- <span style="color:bisque; display: inline;">Add</span> -->
-                    
-                    
                 </li>
                 
-                <!-- <div ng-show="showCatgeoryInput" class="popup"> -->
                 <div ng-hide="!showCatgeoryInput" class="popup">
-                <!-- <div class="popup"> -->
                 	<form id="category-form" ng-submit="showCatgeoryInput = false; addCategory();">
 						<input id="new-category" class="form-control" placeholder="Category name" ng-model="newCategory" ng-disabled="saving" autofocus>
 					</form>
 				</div>
-                
-                <!-- <li style="color:bisque; display: inline;">
-                    <span style="color:bisque; display: inline;"><a href>Add</a></span>
-                </li> -->
-                
-                
 
                 <div ng-repeat="category in categories">
                 	<li>
-                		<!-- <span><i class="fa fa-angle-down"></i></span> -->
-                		<!-- <span style="color:bisque; font-size:25px;">{{ category.name}}</span> -->
-                		
-                		
                 		<span style="color:bisque; font-size:25px;">
-                			<!-- <a href style="display: inline">+</a> -->
-                		
 						<a href ng-click="showProjectInput[category.id] = true" ng-init="showProjectInput[category.id]" style="display: inline">+</a>
-						
-						<!-- <button ng-click="showPopup = true">Show Popup</button> -->
-				        	
                 			{{ category.name}}
-                			
                 		</span>
-                		
-
-                		<!-- <a href="#" class="btn btn-large btn-primary" rel="popover"></a> -->
-
                 	</li>
-                	
-                	<!-- <div ng-show="showPopup" ng-hide='saveField' class="popup" ng-mouseleave='showPopup = false'>
-			            <input type="text">
-			        </div> -->
                 	
                 	<div ng-show="showProjectInput[category.id]" class="popup">
 	                	<form id="project-form" ng-submit="showProjectInput[category.id] = false; addProject(category.id);">
@@ -121,17 +72,6 @@
 	                	<a href ng-click="loadTasks(project.id)">{{ project.name }} <p class="badge" style="display: inline">{{projectTaskCounts[project.id]}}</p></a>
 	                </li>
                 </div>
-
-                <!-- <li ng-repeat="category in categories" class="sidebar-category">
-                	{{ category.name}}
-                </li> -->
-
-
-                <!-- <li ng-repeat="x in projects">
-                	<a href="#">{{ x.name }}</a>
-                </li> -->
-
-
             </ul>
         </div>
         <!-- /#sidebar-wrapper -->
@@ -150,7 +90,6 @@
         </div>
         <div id="navbar" class="navbar-collapse collapse">
           <ul class="nav navbar-nav">
-            <!-- <li class="active"><a href="#">Home</a></li> -->
             <li><a href="/logout"><i class="fa fa-sign-out fa-1x"></i>Sign Out</a></li>
 
           </ul>
