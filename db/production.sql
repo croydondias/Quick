@@ -4,9 +4,6 @@ create database production;
 GRANT ALL PRIVILEGES ON DATABASE "production" to Sylvain;
 ALTER role Sylvain WITH LOGIN;
 
-# chkpass is a new field that automatically encrypts the field
-CREATE EXTENSION chkpass;
-
 ## Login as Sylvain user and run the following
 
 CREATE TABLE employee (
