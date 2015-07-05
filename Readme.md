@@ -54,7 +54,12 @@ The app uses the base template from http://startbootstrap.com/template-overviews
 # Future tasks
 - Sanitize register/sign in form to ensure a correct email is entered
 - Ability to delete categories and projects
-- Ability to see tasks assigned to the current user.
+- Ability to see tasks assigned to the current user
+- Ability to hide Completed tasks
+- Show a strikethrough, when a task is completed
+- Allow users to add a description to the task. Data model already supports this.
+- Allow users to add a description to the project. Data model already supports this.
+- Identify UI usability issues. e.g. When a user types in a task and adds it pressing 'Enter', then text entry box should not lose focus
 - SSL support
 - Use flywayDB for management of database sql changes
 - Checks for sql injection
