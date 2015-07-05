@@ -7,19 +7,6 @@ app.config(function(RestangularProvider) {
     // Note that we run everything on the localhost
 });
 
-//(function() {
-//	 angular.module("tasks").factory("Employees",
-//	 ["Restangular", function(Restangular) {
-//	 var service = Restangular.service("employee");
-//	                        // I can add custom methods to my Employee service
-//	                        // by adding functions here service
-//	                        service.validateData = function(employee) {
-//	                           //validate employee data
-//	                        }
-//	 return service;
-//	 }]);
-//	}());
-
 // Define the controller
 app.controller('mainCtrl', function($scope, Restangular, $resource, $http) {
 
