@@ -3,42 +3,25 @@ app = angular.module('tasks', ['restangular', 'ngResource']);
 
 // Configure the application
 app.config(function(RestangularProvider) {
-    RestangularProvider.setBaseUrl(
-        'http://localhost:8080/api');
-        // Note that we run everything on the localhost
+    RestangularProvider.setBaseUrl('http://localhost:8080/api');
+    // Note that we run everything on the localhost
 });
 
-(function() {
-	 angular.module("tasks").factory("Employees",
-	 ["Restangular", function(Restangular) {
-	 var service = Restangular.service("employee");
-	                        // I can add custom methods to my Employee service
-	                        // by adding functions here service
-	                        service.validateData = function(employee) {
-	                           //validate employee data
-	                        }
-	 return service;
-	 }]);
-	}());
-
-
+//(function() {
+//	 angular.module("tasks").factory("Employees",
+//	 ["Restangular", function(Restangular) {
+//	 var service = Restangular.service("employee");
+//	                        // I can add custom methods to my Employee service
+//	                        // by adding functions here service
+//	                        service.validateData = function(employee) {
+//	                           //validate employee data
+//	                        }
+//	 return service;
+//	 }]);
+//	}());
 
 // Define the controller
 app.controller('mainCtrl', function($scope, Restangular, $resource, $http) {
-//    Restangular.all('task').getList().then(function(result) {
-//        $scope.tasks = result;
-//        console.log('tasks ->' + $scope.tasks);
-//    });
-
-    $scope.resource = Restangular.all('employee');
-
-	$scope.resource.get(1).then(function(response){
-			//console.log(response);
-	});
-
-	$scope.resource.doGET().then(function(response){
-		//console.log(response);
-	});
 
 	$scope.reloadProjectTaskCount = function (projectId) {
 		
@@ -47,13 +30,11 @@ app.controller('mainCtrl', function($scope, Restangular, $resource, $http) {
 	    	if (isNaN(count)) {
 	    		count = 0;
 	    	}
-	    	//console.log('Project ' + projectId + " has " + count + ' tasks remaining')
-			$scope.projectTaskCounts[projectId] = count;
+	    	$scope.projectTaskCounts[projectId] = count;
 		});
 	}
 
 	$scope.reloadProjectTaskCounts = function () {
-		//console.log('Reloading project task counts..');
 		$scope.projectTaskCounts = {};
 		for (var i=0; i<$scope.projects.length; i++) {
 			var projectId = $scope.projects[i].id;
@@ -78,6 +59,7 @@ app.controller('mainCtrl', function($scope, Restangular, $resource, $http) {
 		$scope.reloadProjectTaskCounts();
 	};
 
+	// CRUD Services
 	$scope.employeeService = Restangular.all('employee');
 	$scope.categoryService = Restangular.all('category');
 	$scope.projectService = Restangular.all('project');
@@ -89,9 +71,6 @@ app.controller('mainCtrl', function($scope, Restangular, $resource, $http) {
 	});
 	$scope.categoryService.doGET().then(function(response){
     	$scope.categories = response;
-	});
-	$scope.taskService.doGET().then(function(response){
-    	//$scope.tasks = response;
 	});
 
 	$scope.loadAllCategories = function () {
@@ -113,10 +92,7 @@ app.controller('mainCtrl', function($scope, Restangular, $resource, $http) {
 	};
 	$scope.loadAllProjects();
 	
-
-
 	$scope.loadTasks = function (id) {
-		//console.log('Loading tasks..' + id);
 		$scope.selectedProjectId = id;
 
 		$scope.taskService.doGET("/findByProjectId/" + id).then(function(response){
@@ -133,7 +109,6 @@ app.controller('mainCtrl', function($scope, Restangular, $resource, $http) {
 
 
 	$scope.newTask = '';
-	$scope.editedTodo = null;
 	
 	$scope.addCategoryClick = function () {
 		console.log('addCategoryClicked');
@@ -192,7 +167,6 @@ app.controller('mainCtrl', function($scope, Restangular, $resource, $http) {
 	   		
    			$scope.newProject[categoryId] = '';
    			$scope.loadAllProjects();
-   			//$scope.projectDataChanged();
 	     }).
 	     finally(function() {
 	    	 $scope.saving = false;
@@ -242,10 +216,6 @@ app.controller('mainCtrl', function($scope, Restangular, $resource, $http) {
 	$scope.toggleTaskDone = function (task) {
 		console.log('Toggling task: ' + task.name + " " + task.done);
 
-//		$http.put("/api/task/" + task.id).then(function(response){
-//			console.log(response);
-//		});
-
 		$scope.taskService.get(task.id).then(function(response){
 			response.done = task.done;
 			response.save();
@@ -264,8 +234,8 @@ app.controller('mainCtrl', function($scope, Restangular, $resource, $http) {
     $scope.doneEditingTask = function(task) {
     	if (!angular.isUndefined(task)) {
     		console.log('done editing task: ' + task.id + ' ' + task.name);
-        	// push to server
-    		
+        	
+    		// push to server
     		$scope.taskService.get(task.id).then(function(response){
     			response.name = task.name;
     			response.save();
@@ -293,16 +263,6 @@ app.controller('mainCtrl', function($scope, Restangular, $resource, $http) {
 		    if (index > -1) $scope.tasks.splice(index, 1);
 		    $scope.taskDataChanged();
 		});
-
-//		$scope.taskService.remove("/"+task.id).then(function(response){
-//			console.log(response);
-//			//response.remove();
-//		});
-
-//		$scope.taskService.get(task.id).then(function(response){
-//			console.log(response);
-//			response.remove();
-//		});
 	};
 
 	$scope.selectedItem = {};
@@ -317,61 +277,18 @@ app.controller('mainCtrl', function($scope, Restangular, $resource, $http) {
 
 	$scope.getEmployeeForTask = function (task) {
 		if (!angular.isUndefined(task)) {
-			//console.log("Looking up employee for task: " + task.id);
 			for (var i=0; i<$scope.employees.length; i++) {
 				var e = $scope.employees[i];
 				if (task.employee_id == e.id) {
-					//console.log("Matched employee: " + e.firstName);
 					return e;
 				}
 			}
 		}
-		//console.log("No matching employee found");
 		return "";
 	};
 
-	$scope.getRemainingTasksCount = function () {
-		console.log("remaining task count");
-
-	};
-
-//    $scope.employees = Restangular.all('employee').doGET().$object;
-//    $scope.categories = Restangular.all('category').doGET().$object;
-//    $scope.projects = Restangular.all('project').doGET().$object;
-//    $scope.tasks = Restangular.all('task').doGET().$object;
-
-//    $http.get("http://www.w3schools.com/angular/customers.php")
-//    .success(function (response) {
-//    	//console.log(response);
-//    	//console.log(response.records);
-//    	$scope.names = response.records;
-//    });
-	
-	
 	$scope.$watch('$viewContentLoaded', function(){
 	    // do something
 		console.log('Page has finished loading..');
-		
-		
-//		$('a[rel=popover]').popover({
-//	        html: 'true',
-//	    placement: 'right'
-//	    })
 	 });
-});
-
-// Standardize data format (extract from meta-data where needed)
-app.config(function(RestangularProvider) {
-    // add a response intereceptor
-    RestangularProvider.addResponseInterceptor(function(data, operation, what, url, response, deferred) {
-      var extractedData;
-      // .. to look for getList operations
-      if (operation === "getList") {
-        // .. and handle the data and meta data
-        extractedData = data.tasks;
-      } else {
-        extractedData = data;
-      }
-      return extractedData;
-    });
 });
