@@ -59,7 +59,7 @@ class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 	protected void configure(HttpSecurity http) throws Exception {
 
 		http.authorizeRequests()
-			.antMatchers("/", "/css/**", "/fonts/**", "/img/**", "/js/**", "/index.html", "/login", "/login/**", "/logout")
+			.antMatchers("/", "/css/**", "/img/**", "/js/**", "/index.html", "/login", "/login/**", "/logout")
 			.permitAll().anyRequest().fullyAuthenticated();
 
 		http.formLogin().loginPage("/signin.html").loginProcessingUrl("/login/process")
