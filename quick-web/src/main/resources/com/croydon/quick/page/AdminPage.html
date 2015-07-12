@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <title>Quick - Admin</title>
+
+    <!-- Bootstrap Core CSS -->
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+
+    <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet">
+
+    <!-- Custom CSS -->
+    <link href="css/simple-sidebar.css" rel="stylesheet">
+
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+</head>
+<body>
+
+    <div ng-controller="mainCtrl" id="wrapper">
+    
+    	<!-- Sidebar -->
+        <div id="sidebar-wrapper">
+            <ul class="sidebar-nav">
+<!--                 <li class="sidebar-brand">
+                    <a href ng-show="!showCategoryInput" ng-click="showCategoryInput = true; addCategoryClick();" style="display: inline">
+                        <i class="fa fa-angle-double-right fa-1x"></i>Add a new category
+                    </a>
+                    
+					<form id="category-formxx" ng-show="showCategoryInput" ng-submit="showCatgeoryInput = false; addCategory();">
+						<input id="new-categoryxx" class="form-control" placeholder="Category name" ng-model="newCategory" ng-disabled="saving" autofocus>
+					</form>
+                </li>
+                
+                <div ng-hide="!showCatgeoryInput" class="popup">
+                	<form id="category-form" ng-submit="showCatgeoryInput = false; addCategory();">
+						<input id="new-category" class="form-control" placeholder="Category name" ng-model="newCategory" ng-disabled="saving" autofocus>
+					</form>
+				</div>
+
+                <div ng-repeat="category in categories">
+                	<li>
+                		<span style="color:bisque; font-size:25px;">
+						<a href ng-click="showProjectInput[category.id] = true" ng-init="showProjectInput[category.id]" style="display: inline">+</a>
+                			{{ category.name}}
+                		</span>
+                	</li>
+                	
+                	<div ng-show="showProjectInput[category.id]" class="popup">
+	                	<form id="project-form" ng-submit="showProjectInput[category.id] = false; addProject(category.id);">
+							<input id="new-project" class="form-control" placeholder="Project name" ng-model="newProject[category.id]" ng-disabled="saving" autofocus>
+						</form>
+					</div>
+                	
+                	<li ng-repeat="project in projects" ng-show="project.category_id == {{category.id}}">
+	                	<a href ng-click="loadTasks(project.id)">{{ project.name }} <p class="badge" style="display: inline">{{projectTaskCounts[project.id]}}</p></a>
+	                </li>
+                </div> -->
+                
+                
+                <li><a href="#">Employee Settings</a></li>
+                <li><a href="#">Project Settings</a></li>
+                <li><a href="#">Category Settings</a></li>
+            </ul>
+        </div>
+        <!-- /#sidebar-wrapper -->
+
+	<!-- Static navbar -->
+    <nav class="navbar navbar-inverse navbar-static-top">
+      <div class="container">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="navbar-brand" href="./index.html"><i class="fa fa-home fa-1x"></i></a>
+        </div>
+        <div id="navbar" class="navbar-collapse collapse">
+          <ul class="nav navbar-nav">
+          	<li><a href="/play.html"><i class="fa fa-user-md fa-1x"></i> Play</a></li>
+            <li><a href="/logout"><i class="fa fa-sign-out fa-1x"></i> Sign Out</a></li>
+          </ul>
+          <ul class="nav navbar-nav navbar-right">
+            <!-- <li><a href="#">Sign out</a></li> -->
+          </ul>
+        </div><!--/.nav-collapse -->
+      </div>
+    </nav>
+	
+        <!-- Page Content -->
+        <div id="page-content-wrapper">
+			<section ng-show="selectedProjectId" ngCloak>
+				<h4 class="text-center">Admin Settings</h4>
+				
+				<table class="table table-striped">
+					<thead>
+						<tr>
+							<th>Firstname</th>
+							<th>Lastname</th>
+							<th>Email</th>
+							<th>Save</th>
+							<th>Remove</th>
+						</tr>
+					</thead>
+					<tbody>
+						<div wicket:id="employeeList">
+				            <form wicket:id="employeeForm">
+				            	<tr>
+					                <td><input required="" wicket:id="firstName" type="text"/></td>
+					                <td><input required="" wicket:id="lastName" type="text"/></td>
+					                <td><span wicket:id="email">[email]</span></td>
+					                <td><input wicket:id="save" type="submit" value="Save" class="btn btn-primary"/></td>
+					                <td><input wicket:id="remove" type="submit" value="Remove" class="btn btn-danger"/></td>
+					                
+					                <!-- <td><input wicket:id="save" type="submit" value="Save" class="btn btn-primary"><i class="content-cross fa fa-save fa-2x"></i></input></td>
+					                <td><input wicket:id="remove" type="submit" value="Remove" class="btn btn-danger"><i class="content-cross fa fa-times fa-2x"></i></input></td> -->
+				                </tr>
+				            </form>
+				        </div>
+					</tbody>
+				</table>
+
+				<!-- <ul>
+				    <li wicket:id="listItems"></li>
+				</ul> -->
+				
+				<!-- <div wicket:id="employees" style="display: table-row;">
+					<div style="display: table-cell;"><b>First name: </b></div>
+					<div wicket:id="firstName" style="display: table-cell;"></div>
+					<div style="display: table-cell;"><b>Last name: </b></div>
+					<div wicket:id="lastName" style="display: table-cell;"></div>
+				</div> -->
+        		
+			</section>
+			
+			<!-- <section ng-show="selectedProjectId" ngCloak>
+				<h4 class="text-center">Tasks</h4>
+				<form id="task-form" ng-submit="addTask()">
+					<input id="new-task" class="form-control" placeholder="What do you need to complete?" ng-model="newTask" ng-disabled="saving" autofocus>
+				</form>
+
+		         <ul class="list-group checked-list-box">
+	     			<li ng-repeat="task in tasks" class="list-group-item">
+	     				<div class="view">
+							<input class="toggle" type="checkbox" ng-model="task.done" ng-change="toggleTaskDone(task)">
+							
+							<label ng-dblclick="startEditingTask(task)">
+								  <span ng-hide="task.editing">{{task.name}}</span>
+						          <form ng-submit="doneEditingTask(task)" ng-show="task.editing">
+						              <input class="form-control" ng-model="task.name" ng-blur="doneEditingTask(task)" ng-focus="task== editedTask">
+						          </form>
+							</label>
+							
+							<div class="pull-right">
+								<select select-box ng-model="selected" ng-change="changeEmployeeOnTask(task, selected.id)"
+									ng-init="selected = getEmployeeForTask(task)"
+									ng-options="item.firstName + ' ' + item.lastName for item in employees track by item.id"></select>
+
+								<a href ng-click="removeTask(task)" class="destroy"><i class="content-cross fa fa-times fa-2x"></i></a>
+							</div>
+						</div>
+	     			</li>
+
+	             </ul>
+	             <span><i>{{tasksRemaining()}} items left</i></span>
+	             
+	             
+			</section> -->
+
+        </div>
+        <!-- /#page-content-wrapper -->
+        
+        <footer class="footer">
+	      <div class="container">
+	      	<div class="text-center">
+	        	<p class="text-muted" style="font-size: 70%">This is a footer.</p>
+	        </div>
+	      </div>
+	    </footer>
+
+    </div>
+    <!-- /#wrapper -->
+
+    <!-- jQuery -->
+    <script src="js/jquery.js"></script>
+
+    <!-- Bootstrap Core JavaScript -->
+    <script src="js/bootstrap.min.js"></script>
+	
+	<!-- Menu Toggle Script -->
+    <script>
+    $("#menu-toggle").click(function(e) {
+        e.preventDefault();
+        $("#wrapper").toggleClass("toggled");
+    });
+
+    $('a[rel=popover]').popover({
+        html: 'true',
+    placement: 'right'
+    })
+    </script>
+    
+</body>
+
+</html>

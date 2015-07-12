@@ -1,3 +1,5 @@
+
+
 package com.croydon.quick.api;
 
 import java.util.ArrayList;
@@ -16,11 +18,12 @@ import org.springframework.web.bind.annotation.RestController;
 import com.croydon.quick.domain.Task;
 import com.croydon.quick.exception.TaskAlreadyExistsException;
 import com.croydon.quick.exception.TaskDoesntExistException;
+import com.croydon.quick.page.AuthenticatedWebPage;
 import com.croydon.quick.service.TaskService;
 
 @RestController
 @RequestMapping("/api/task")
-public class TaskRestController {
+public class TaskRestController implements AuthenticatedWebPage {
 	
 	@Autowired
 	private TaskService taskService;

@@ -4,6 +4,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.apache.log4j.Logger;
+import org.apache.wicket.authroles.authentication.AuthenticatedWebSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -29,6 +30,24 @@ public class LoginRestController {
 	
 	@Autowired
 	private PasswordEncoder passwordEncoder;
+	
+//	@RequestMapping(method = RequestMethod.POST, value = "/process")
+//	public @ResponseBody Employee process(HttpServletRequest request, HttpServletResponse response) throws IllegalArgumentException {
+//		final String email = request.getParameter("email");
+//		final String password = request.getParameter("password");
+//		
+//		if (email == null || email.isEmpty()) {
+//			throw new IllegalArgumentException("Email cannot be blank");
+//		}
+//		if (password == null || password.isEmpty()) {
+//			throw new IllegalArgumentException("Password cannot be blank");
+//		}
+//		
+//		boolean authResult = AuthenticatedWebSession.get().signIn(email, password);
+//		LOG.info(String.format("Checking login: %s %s -> %b", email, password, authResult));
+//		
+//		return null;
+//	}
 	
 	@RequestMapping(method = RequestMethod.POST, value = "/register")
 	public @ResponseBody Employee register(HttpServletRequest request, HttpServletResponse response) throws IllegalArgumentException, EmployeeAlreadyExistsException {

@@ -2,5 +2,6 @@
 <configuration>
     <include resource="org/springframework/boot/logging/logback/base.xml" />
     <logger name="org.springframework.web" level="INFO" />
+    <logger name="org.apache.wicket" level="INFO" />
     <logger name="com.croydon.quick" level="INFO" />
 </configuration>

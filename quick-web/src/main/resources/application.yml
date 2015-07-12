@@ -10,6 +10,6 @@ spring:
             ddl-auto: validate
     datasource:
         driverClassName: org.postgresql.Driver
-        url: jdbc:postgresql://192.168.99.100:32770/production
+        url: jdbc:postgresql://192.168.99.100:32768/production
         username: sylvain
         password: dubai
