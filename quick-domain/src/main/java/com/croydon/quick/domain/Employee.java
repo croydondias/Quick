@@ -1,23 +1,33 @@
 package com.croydon.quick.domain;
 
+import java.io.Serializable;
+import java.util.List;
+
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToMany;
 import javax.persistence.SequenceGenerator;
 
 @Entity
-public class Employee {
+public class Employee implements Serializable {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "employee_seq_gen")
-	//@GeneratedValue(strategy = GenerationType.AUTO, generator = "employee_seq_gen")
 	@SequenceGenerator(name = "employee_seq_gen", sequenceName = "employee_id_seq")
 	private Long id;
 	private String firstName;
 	private String lastName;
 	private String email;
 	private String password;
+	
+	@OneToMany(cascade=CascadeType.ALL, fetch=FetchType.LAZY)
+	@JoinColumn(name="employee_id")
+	private List<Task> tasks;
 	
 	public Long getId() {
 		return id;

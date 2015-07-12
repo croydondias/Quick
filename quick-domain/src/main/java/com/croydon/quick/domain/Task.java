@@ -1,5 +1,7 @@
 package com.croydon.quick.domain;
 
+import java.io.Serializable;
+
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -8,7 +10,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.SequenceGenerator;
 
 @Entity
-public class Task {
+public class Task implements Serializable {
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "task_seq_gen")
