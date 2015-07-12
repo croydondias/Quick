@@ -68,12 +68,12 @@ public class AdminPage extends WebPage implements AuthenticatedWebPage {
 //           });
     }
     
-    @Override
-    public void renderHead(IHeaderResponse response) {
-        super.renderHead(response);
-        CssResourceReference cssResourceReference = new CssResourceReference(
-                WicketWebApplication.class, "example.css");
-        response.render(CssHeaderItem.forReference(cssResourceReference));
-    }
+//    @Override
+//    public void renderHead(IHeaderResponse response) {
+//        super.renderHead(response);
+//        CssResourceReference cssResourceReference = new CssResourceReference(
+//                WicketWebApplication.class, "example.css");
+//        response.render(CssHeaderItem.forReference(cssResourceReference));
+//    }
 
 }
