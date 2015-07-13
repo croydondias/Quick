@@ -32,6 +32,7 @@ psql -d production -U sylvain --password
 -- REST api
 - UI Developed completely using Bootstrap and jquery.
 - Angular JS is used in the UI to talk to the backend via the REST api provided by the server.
+- [Wicket](https://wicket.apache.org/) is used for parts of the UI, like the admin page.
 - Postgres used for the database. Since Hibernate is used for querying the database, it should be quite a simple change to swap the underlying database to something else like MySQL, Oracle, etc.
 - Maven is used for dependency management.
 
