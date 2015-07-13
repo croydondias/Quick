@@ -17,6 +17,7 @@ import org.apache.wicket.util.string.StringValue;
 import org.apache.wicket.util.string.Strings;
 import org.wicketstuff.annotation.mount.MountPath;
 
+import com.croydon.quick.config.AppProperties;
 import com.croydon.quick.config.HibernateConfig;
 
 @MountPath("/signin.html")
@@ -76,6 +77,9 @@ public class SignInPage extends WebPage {
              //if authentication succeeds redirect user to the requested page
              if (authResult) { 
                 //continueToOriginalDestination();
+            	 // Add user to session
+            	 getSession().bind();
+            	 getSession().setAttribute(AppProperties.CURRENT_USER, email);
                 setResponsePage(PlayPage.class);
              } else {
 					final String errorMsg = "Unable to sign in";

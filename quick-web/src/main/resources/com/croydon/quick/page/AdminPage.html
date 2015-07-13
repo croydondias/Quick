@@ -107,6 +107,7 @@
 							<th>Firstname</th>
 							<th>Lastname</th>
 							<th>Email</th>
+							<th>Password</th>
 							<th>Save</th>
 							<th>Remove</th>
 						</tr>
@@ -115,14 +116,12 @@
 						<div wicket:id="employeeList">
 				            <form wicket:id="employeeForm">
 				            	<tr>
-					                <td><input required="" wicket:id="firstName" type="text"/></td>
-					                <td><input required="" wicket:id="lastName" type="text"/></td>
+					                <td><input required wicket:id="firstName" type="text"/></td>
+					                <td><input required wicket:id="lastName" type="text"/></td>
 					                <td><span wicket:id="email">[email]</span></td>
+					                <td><input required wicket:id="password" type="password"/></td>
 					                <td><input wicket:id="save" type="submit" value="Save" class="btn btn-primary"/></td>
-					                <td><input wicket:id="remove" type="submit" value="Remove" class="btn btn-danger"/></td>
-					                
-					                <!-- <td><input wicket:id="save" type="submit" value="Save" class="btn btn-primary"><i class="content-cross fa fa-save fa-2x"></i></input></td>
-					                <td><input wicket:id="remove" type="submit" value="Remove" class="btn btn-danger"><i class="content-cross fa fa-times fa-2x"></i></input></td> -->
+					                <td><input wicket:id="remove" type="button" value="Remove" class="btn btn-danger"/></td>
 				                </tr>
 				            </form>
 				        </div>
@@ -133,14 +132,6 @@
         </div>
         <!-- /#page-content-wrapper -->
         
-        <footer class="footer">
-	      <div class="container">
-	      	<div class="text-center">
-	        	<p class="text-muted" style="font-size: 70%">This is a footer.</p>
-	        </div>
-	      </div>
-	    </footer>
-
     </div>
     <!-- /#wrapper -->
 
