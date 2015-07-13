@@ -69,7 +69,7 @@
 					</div>
                 	
                 	<li ng-repeat="project in projects" ng-show="project.category_id == {{category.id}}">
-	                	<a href ng-click="loadTasks(project.id)">{{ project.name }} <p class="badge" style="display: inline">{{projectTaskCounts[project.id]}}</p></a>
+	                	<a href ng-click="loadTasks(project)">{{ project.name }} <p class="badge" style="display: inline">{{projectTaskCounts[project.id]}}</p></a>
 	                </li>
                 </div>
             </ul>
@@ -103,29 +103,9 @@
 		<!-- <div class="container"> -->
         <!-- Page Content -->
         <div id="page-content-wrapper">
-            <div class="container-fluid">
-            <!-- <div class="jumbotron"> -->
-                <div class="row">
-                    <!-- <div class="col-lg-12">
-                        <h1>Simple Sidebar</h1>
-                        <p>This template has a responsive menu toggling system. The menu will appear collapsed on smaller screens, and will appear non-collapsed on larger screens. When toggled using the button below, the menu will appear/disappear. On small screens, the page content will be pushed off canvas.</p>
-                        <p>Make sure to keep all page content within the <code>#page-content-wrapper</code>.</p>
-                        <a href="#menu-toggle" class="btn btn-default" id="menu-toggle">Toggle Menu</a>
-                    </div> -->
-
-                    <!-- <h4 class="text-center">Tasks</h4>
-			         <div class="well" style="max-height: 300px;overflow: auto;">
-			     		<ul class="list-group checked-list-box">
-			     			<li ng-repeat="x in tasks" class="list-group-item"> {{ x.name }}</li>
-			             </ul>
-			         </div> -->
-
-                </div>
-            </div>
-
-
+            
 			<section ng-show="selectedProjectId" ngCloak>
-				<h4 class="text-center">Tasks</h4>
+				<h4 class="text-center">{{selectedProjectName}}</h4>
 				<form id="task-form" ng-submit="addTask()">
 					<input id="new-task" class="form-control" placeholder="What do you need to complete?" ng-model="newTask" ng-disabled="saving" autofocus>
 				</form>
@@ -142,42 +122,7 @@
 						          </form>
 							</label>
 							
-							
-							
 							<div class="pull-right">
-
-								<!-- <div class="form-group">
-								  <label for="sel1">Select list:</label> -->
-								  <!-- <select title="Unassigned">
-								    <option>Croydon Dias</option>
-								    <option>Mannit Bilakhia</option>
-								    <option>Rishabh Sharma</option>
-								    <option>Alina Maydybura</option>
-								  </select> -->
-								<!-- </div> -->
-
-								<!-- <select id="test" name="test">
-								    <option value="SelectBoxIt is:">SelectBoxIt is:</option>
-								    <option value="a jQuery Plugin">a jQuery Plugin</option>
-								    <option value="a Select Box Replacement">a Select Box Replacement</option>
-								    <option value="a Stateful UI Widget">a Stateful UI Widget</option>
-								  </select> -->
-
-								  <!-- <select ng-model="selectedItem" ng-change="changeEmployeeOnTask(task, selectedItem)" ng-init="selectedItem = selectedItem || employees[0].value"> -->
-
-								  <!-- <select ng-model="selectedItem[task.id]" ng-change="changeEmployeeOnTask(task, selectedItem[task.id])"
-								  	ng-init="selectedItem[task.id] = selectedItem[task.id] || employees[0].value"> -->
-
-
-								  <!-- <select ng-model="selectedItem" ng-change="changeEmployeeOnTask(task, selectedItem)"
-								  	ng-init="selectedItem = employees[0].id"> -->
-
-								  <!-- <select ng-model="selectedItem" ng-change="changeEmployeeOnTask(task, selectedItem)"
-								  	ng-init="selectedItem = getEmployeeForTask(task).id">
-
-							        <option ng-repeat="item in employees" value="{{item.id}}">{{item.firstName}} {{item.lastName}}</option>
-							      </select> -->
-
 								<select select-box ng-model="selected" ng-change="changeEmployeeOnTask(task, selected.id)"
 									ng-init="selected = getEmployeeForTask(task)"
 									ng-options="item.firstName + ' ' + item.lastName for item in employees track by item.id"></select>

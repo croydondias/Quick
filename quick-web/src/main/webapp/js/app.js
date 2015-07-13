@@ -36,6 +36,7 @@ app.controller('mainCtrl', function($scope, Restangular, $resource, $http) {
 	$scope.newProject = {};
 	
 	$scope.selectedProjectId = '';
+	$scope.selectedProjectName = '';
 	$scope.tasks = '';
 
 	$scope.taskDataChanged = function () {
@@ -79,10 +80,11 @@ app.controller('mainCtrl', function($scope, Restangular, $resource, $http) {
 	};
 	$scope.loadAllProjects();
 	
-	$scope.loadTasks = function (id) {
-		$scope.selectedProjectId = id;
+	$scope.loadTasks = function (p) {
+		$scope.selectedProjectId = p.id;
+		$scope.selectedProjectName = p.name;
 
-		$scope.taskService.doGET("/findByProjectId/" + id).then(function(response){
+		$scope.taskService.doGET("/findByProjectId/" + p.id).then(function(response){
 	    	var selectedTasks = response;
 	    	$scope.tasks = selectedTasks;
 	    	var count = 0;
@@ -205,8 +207,9 @@ app.controller('mainCtrl', function($scope, Restangular, $resource, $http) {
 
 		$scope.taskService.get(task.id).then(function(response){
 			response.done = task.done;
-			response.save();
-			$scope.taskDataChanged();
+			response.save().then(function(res)  { 
+				$scope.taskDataChanged();
+			});
 		});
 	};
 	
@@ -225,13 +228,13 @@ app.controller('mainCtrl', function($scope, Restangular, $resource, $http) {
     		// push to server
     		$scope.taskService.get(task.id).then(function(response){
     			response.name = task.name;
-    			response.save();
-    			$scope.taskDataChanged();
+    			response.save().then(function(res)  {
+    				$scope.taskDataChanged();
+    			});
     		}).
     		finally(function() {
 	   	    	task.editing=false;
 	   	     });
-    			
     	}
     	
         $scope.editedTask = null;
