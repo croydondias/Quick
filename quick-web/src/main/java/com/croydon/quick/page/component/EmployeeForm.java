@@ -4,6 +4,7 @@ import org.apache.log4j.Logger;
 import org.apache.wicket.markup.html.basic.Label;
 import org.apache.wicket.markup.html.form.Button;
 import org.apache.wicket.markup.html.form.Form;
+import org.apache.wicket.markup.html.form.StatelessForm;
 import org.apache.wicket.markup.html.form.TextField;
 import org.apache.wicket.model.IModel;
 import org.apache.wicket.spring.injection.annot.SpringBean;
@@ -13,7 +14,7 @@ import com.croydon.quick.exception.EmployeeDoesntExistException;
 import com.croydon.quick.page.AdminPage;
 import com.croydon.quick.service.EmployeeService;
 
-public class EmployeeForm extends Form {
+public class EmployeeForm extends StatelessForm {
 	
 	private static final Logger LOG = Logger.getLogger(EmployeeForm.class);
 	private static final long serialVersionUID = 1L;

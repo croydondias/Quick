@@ -64,7 +64,7 @@ public class SignInPage extends WebPage {
        
        add(loginStatus);
        
-       Form form = new Form("signinForm"){
+       StatelessForm form = new StatelessForm("signinForm"){
           @Override
           protected void onSubmit() {
              LOG.info("Wicket LOGGING IN ++++++++++++");
