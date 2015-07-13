@@ -35,8 +35,6 @@ import com.croydon.quick.page.HomePage;
 import com.croydon.quick.page.PlayPage;
 import com.croydon.quick.page.SignInPage;
 
-import de.agilecoders.wicket.core.Bootstrap;
-
 @EnableConfigurationProperties
 @Configuration
 @EnableAutoConfiguration
