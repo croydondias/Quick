@@ -92,9 +92,6 @@
           	<li><a href="/play.html"><i class="fa fa-user-md fa-1x"></i> Play</a></li>
             <li><a href="/logout"><i class="fa fa-sign-out fa-1x"></i> Sign Out</a></li>
           </ul>
-          <ul class="nav navbar-nav navbar-right">
-            <!-- <li><a href="#">Sign out</a></li> -->
-          </ul>
         </div><!--/.nav-collapse -->
       </div>
     </nav>
@@ -131,53 +128,7 @@
 				        </div>
 					</tbody>
 				</table>
-
-				<!-- <ul>
-				    <li wicket:id="listItems"></li>
-				</ul> -->
-				
-				<!-- <div wicket:id="employees" style="display: table-row;">
-					<div style="display: table-cell;"><b>First name: </b></div>
-					<div wicket:id="firstName" style="display: table-cell;"></div>
-					<div style="display: table-cell;"><b>Last name: </b></div>
-					<div wicket:id="lastName" style="display: table-cell;"></div>
-				</div> -->
-        		
 			</section>
-			
-			<!-- <section ng-show="selectedProjectId" ngCloak>
-				<h4 class="text-center">Tasks</h4>
-				<form id="task-form" ng-submit="addTask()">
-					<input id="new-task" class="form-control" placeholder="What do you need to complete?" ng-model="newTask" ng-disabled="saving" autofocus>
-				</form>
-
-		         <ul class="list-group checked-list-box">
-	     			<li ng-repeat="task in tasks" class="list-group-item">
-	     				<div class="view">
-							<input class="toggle" type="checkbox" ng-model="task.done" ng-change="toggleTaskDone(task)">
-							
-							<label ng-dblclick="startEditingTask(task)">
-								  <span ng-hide="task.editing">{{task.name}}</span>
-						          <form ng-submit="doneEditingTask(task)" ng-show="task.editing">
-						              <input class="form-control" ng-model="task.name" ng-blur="doneEditingTask(task)" ng-focus="task== editedTask">
-						          </form>
-							</label>
-							
-							<div class="pull-right">
-								<select select-box ng-model="selected" ng-change="changeEmployeeOnTask(task, selected.id)"
-									ng-init="selected = getEmployeeForTask(task)"
-									ng-options="item.firstName + ' ' + item.lastName for item in employees track by item.id"></select>
-
-								<a href ng-click="removeTask(task)" class="destroy"><i class="content-cross fa fa-times fa-2x"></i></a>
-							</div>
-						</div>
-	     			</li>
-
-	             </ul>
-	             <span><i>{{tasksRemaining()}} items left</i></span>
-	             
-	             
-			</section> -->
 
         </div>
         <!-- /#page-content-wrapper -->
