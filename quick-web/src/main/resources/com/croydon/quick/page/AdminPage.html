@@ -99,7 +99,7 @@
         <!-- Page Content -->
         <div id="page-content-wrapper">
 			<section ng-show="selectedProjectId" ngCloak>
-				<h4 class="text-center">Admin Settings</h4>
+				<h4 class="text-center">Employee Settings</h4>
 				
 				<table class="table table-striped">
 					<thead>
@@ -132,6 +132,13 @@
         </div>
         <!-- /#page-content-wrapper -->
         
+        <footer class="footer">
+	      <div class="container">
+	      	<div ng-show="selectedProjectId" class="text-center" ngCloak>
+	        	<p class="text-muted" style="font-size: 70%">Removing an employee also removes the tasks assigned to that employee.</p>
+	        </div>
+	      </div>
+	    </footer>
     </div>
     <!-- /#wrapper -->
 

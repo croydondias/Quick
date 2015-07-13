@@ -2,15 +2,12 @@ package com.croydon.quick.page.component;
 
 import org.apache.log4j.Logger;
 import org.apache.wicket.AttributeModifier;
-import org.apache.wicket.behavior.AttributeAppender;
 import org.apache.wicket.markup.html.basic.Label;
 import org.apache.wicket.markup.html.form.Button;
-import org.apache.wicket.markup.html.form.Form;
 import org.apache.wicket.markup.html.form.PasswordTextField;
 import org.apache.wicket.markup.html.form.StatelessForm;
 import org.apache.wicket.markup.html.form.TextField;
 import org.apache.wicket.model.IModel;
-import org.apache.wicket.model.Model;
 import org.apache.wicket.spring.injection.annot.SpringBean;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
@@ -52,28 +49,7 @@ public class EmployeeForm extends StatelessForm {
 	        	public void onSubmit() {
 	            	LOG.info("SAVE clicked");
 	                Employee editedEmployee = (Employee) getForm().getModelObject();
-	                //updateEmployeeInDatabase(editedEmployee);
-	                
-	                
-	                Employee updateEmployee = employeeService.findByEmail(editedEmployee.getEmail());
-	                if (updateEmployee != null) {
-	                	updateEmployee.setFirstName(editedEmployee.getFirstName());
-	                    updateEmployee.setLastName(editedEmployee.getLastName());
-	                    
-	                    if (editedEmployee.getPassword() != null && !editedEmployee.getPassword().isEmpty()) {
-	                    	final String encryptedPass = passwordEncoder.encode(editedEmployee.getPassword());
-	                    	updateEmployee.setPassword(encryptedPass);
-	                    }
-	                    LOG.info(updateEmployee + " " + updateEmployee.getPassword());
-	                    
-	                    LOG.info("Updating ...");
-	                	try {
-	    					employeeService.save(updateEmployee);
-	    				} catch (EmployeeDoesntExistException e) {
-	    					LOG.error("Error saving employee", e);
-	    				}
-	                }
-	                
+	                updateEmployeeInDatabase(editedEmployee);
 	                setResponsePage(AdminPage.class);
 	            } 
         });
@@ -94,64 +70,23 @@ public class EmployeeForm extends StatelessForm {
         add(removeButton); 
 	}
 	
-//	private void updateEmployeeInDatabase(Employee editedEmployee) {
-//		Employee updateEmployee = employeeService.findByEmail(editedEmployee.getEmail());
-//        if (updateEmployee != null) {
-//        	boolean performUpdate = false;
-//        	
-//        	boolean firstnameChanged = !updateEmployee.getFirstName().equals(editedEmployee.getFirstName());
-//        	LOG.info(String.format("[%s][%s]firstnameChanged = %b", updateEmployee.getFirstName(), editedEmployee.getFirstName(), firstnameChanged));
-//            if (!updateEmployee.getFirstName().equals(editedEmployee.getFirstName())) {
-//            	updateEmployee.setFirstName(editedEmployee.getFirstName());
-//            	performUpdate = true;
-//            }
-//            if (!updateEmployee.getLastName().equals(editedEmployee.getLastName())) {
-//            	updateEmployee.setLastName(editedEmployee.getLastName());
-//            	performUpdate = true;
-//            }
-//            if (editedEmployee.getPassword() != null && !editedEmployee.getPassword().isEmpty()) {
-//            	final String encryptedPass = passwordEncoder.encode(editedEmployee.getPassword());
-//            	updateEmployee.setPassword(encryptedPass);
-//            	performUpdate = true;
-//            }
-//            //LOG.info(updateEmployee + " " + updateEmployee.getPassword());
-//            
-//            if (performUpdate) {
-//            	LOG.info("Updating ...");
-//            	try {
-//					employeeService.save(updateEmployee);
-//				} catch (EmployeeDoesntExistException e) {
-//					LOG.error("Error saving employee", e);
-//				}
-//            }
-//        }
-//	}
-	
 	private void updateEmployeeInDatabase(Employee editedEmployee) {
 		Employee updateEmployee = employeeService.findByEmail(editedEmployee.getEmail());
         if (updateEmployee != null) {
-        	boolean performUpdate = true;
-        	
-//        	boolean firstnameChanged = !updateEmployee.getFirstName().equals(editedEmployee.getFirstName());
-//        	LOG.info(String.format("[%s][%s]firstnameChanged = %b", updateEmployee.getFirstName(), editedEmployee.getFirstName(), firstnameChanged));
-//            if (!updateEmployee.getFirstName().equals(editedEmployee.getFirstName())) {
-//            	updateEmployee.setFirstName(editedEmployee.getFirstName());
-//            	performUpdate = true;
-//            }
-//            if (!updateEmployee.getLastName().equals(editedEmployee.getLastName())) {
-//            	updateEmployee.setLastName(editedEmployee.getLastName());
-//            	performUpdate = true;
-//            }
-            
-            updateEmployee.setFirstName(editedEmployee.getFirstName());
-            updateEmployee.setLastName(editedEmployee.getLastName());
-            
+        	boolean performUpdate = false;
+            if (!updateEmployee.getFirstName().equals(editedEmployee.getFirstName())) {
+            	updateEmployee.setFirstName(editedEmployee.getFirstName());
+            	performUpdate = true;
+            }
+            if (!updateEmployee.getLastName().equals(editedEmployee.getLastName())) {
+            	updateEmployee.setLastName(editedEmployee.getLastName());
+            	performUpdate = true;
+            }
             if (editedEmployee.getPassword() != null && !editedEmployee.getPassword().isEmpty()) {
             	final String encryptedPass = passwordEncoder.encode(editedEmployee.getPassword());
             	updateEmployee.setPassword(encryptedPass);
             	performUpdate = true;
             }
-            LOG.info(updateEmployee + " " + updateEmployee.getPassword());
             
             if (performUpdate) {
             	LOG.info("Updating ...");
