@@ -1,25 +1,17 @@
 package com.croydon.quick.page;
 
 import java.util.Collections;
-import java.util.Comparator;
 import java.util.List;
 
-import org.apache.wicket.ajax.AjaxRequestTarget;
-import org.apache.wicket.ajax.markup.html.AjaxLink;
-import org.apache.wicket.extensions.ajax.markup.html.modal.ModalWindow;
 import org.apache.wicket.markup.html.WebPage;
-import org.apache.wicket.markup.html.basic.Label;
-import org.apache.wicket.markup.html.form.PasswordTextField;
+import org.apache.wicket.markup.html.link.BookmarkablePageLink;
 import org.apache.wicket.markup.html.list.ListItem;
 import org.apache.wicket.markup.html.list.ListView;
 import org.apache.wicket.model.CompoundPropertyModel;
 import org.apache.wicket.model.LoadableDetachableModel;
-import org.apache.wicket.model.Model;
-import org.apache.wicket.model.PropertyModel;
 import org.apache.wicket.spring.injection.annot.SpringBean;
 import org.wicketstuff.annotation.mount.MountPath;
 
-import com.croydon.quick.config.AppProperties;
 import com.croydon.quick.domain.Employee;
 import com.croydon.quick.domain.util.EmployeeComparator;
 import com.croydon.quick.page.component.DeleteEmployeeForm;
@@ -35,7 +27,9 @@ public class AdminPage extends WebPage implements AuthenticatedWebPage {
     private EmployeeService employeeService;
 
     public AdminPage() {
-        //add(new BookmarkablePageLink<String>("link", Homepage.class));
+    	add(new BookmarkablePageLink<String>("home", HomePage.class));
+    	add(new BookmarkablePageLink<String>("play", PlayPage.class));
+        add(new BookmarkablePageLink<String>("logout", HomePage.class));
     	
         List<Employee> employees = employeeService.findAll();
         Collections.sort(employees, new EmployeeComparator());
