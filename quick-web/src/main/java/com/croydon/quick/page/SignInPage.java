@@ -28,68 +28,56 @@ public class SignInPage extends WebPage {
 	
 	private String email;
 	private String password;
-	private String message = "";
 	
     public SignInPage() {
     }
 
     public SignInPage(final PageParameters parameters) {
 		super(parameters);
-		StringValue result = parameters.get("msg");
-		if (!result.isNull()) {
-			message = result.toString();
-		}
-		LOG.info("message = " + message);
     }
     
     @Override
     protected void onInitialize() {
        super.onInitialize();
        
-//       Label loginStatus = new Label("signin-warning-alert:loginStatus", Model.of(message));
-//       if (!Strings.isEmpty(message)) {
-//    	   add(loginStatus);
-//       }
+       // Fetch the error message if present in the session
+       final String signInError = (String) getSession().getAttribute(AppProperties.SIGN_IN_ERROR);
        
-       String html = message;
-       if (!Strings.isEmpty(message)) {
+       String html = "";
+       if (!Strings.isEmpty(signInError)) {
     	   StringBuilder sb = new StringBuilder();
     	   sb.append("<div id=\"signin-warning-alert\" class=\"alert alert-warning fade in\" style=\"width: 50%;\">");
-    	   sb.append(String.format("<span id=\"signin-warning-alert-msg\">%s</span>", message));
+    	   sb.append(String.format("<span id=\"signin-warning-alert-msg\">%s</span>", signInError));
     	   sb.append("</div>");
     	   html = sb.toString();
        }
        
        Label loginStatus = new Label("loginStatus", Model.of(html));
        loginStatus.setEscapeModelStrings(false);
-       
        add(loginStatus);
        
-       StatelessForm form = new StatelessForm("signinForm"){
+       StatelessForm form = new StatelessForm("signinForm") {
           @Override
           protected void onSubmit() {
-             LOG.info("Wicket LOGGING IN ++++++++++++");
-        	 if (Strings.isEmpty(email)) {
+             if (Strings.isEmpty(email) || Strings.isEmpty(password)) {
                 return;
              }
 
              boolean authResult = AuthenticatedWebSession.get().signIn(email, password);
              //if authentication succeeds redirect user to the requested page
              if (authResult) { 
-                //continueToOriginalDestination();
-            	 // Add user to session
-            	 getSession().bind();
-            	 getSession().setAttribute(AppProperties.CURRENT_USER, email);
-                setResponsePage(PlayPage.class);
+					// continueToOriginalDestination();
+					// Add user to session
+					getSession().bind();
+					getSession().setAttribute(AppProperties.CURRENT_USER, email);
+					getSession().removeAttribute(AppProperties.SIGN_IN_ERROR);
+					setResponsePage(PlayPage.class);
              } else {
 					final String errorMsg = "Unable to sign in";
-
-					PageParameters pageParameters = new PageParameters();
-					pageParameters.add("msg", errorMsg);
-					setResponsePage(SignInPage.class, pageParameters);
-
-//					loginStatus.setDefaultModelObject(errorMsg);
-//					error(errorMsg);
+					// Add error message to the session
+					getSession().bind();
+					getSession().setAttribute(AppProperties.SIGN_IN_ERROR, errorMsg + " (session)");
+					setResponsePage(SignInPage.class);
             	 
              }
           }
@@ -101,20 +89,5 @@ public class SignInPage extends WebPage {
        form.add(new PasswordTextField("password"));
 
        add(form);
-       //add(response());
     }
-    
-//    private WebMarkupContainer response() {
-//        WebMarkupContainer r = new WebMarkupContainer("signin-warning-alert") {
-//
-//           @Override
-//           protected void onConfigure() {
-//              super.onConfigure();
-//              setVisible(!Strings.isEmpty(message));
-//           }
-//
-//        };
-//        r.setOutputMarkupPlaceholderTag(true);
-//        return r;
-//     }
 }
