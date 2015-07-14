@@ -10,16 +10,21 @@ import org.apache.wicket.markup.html.form.TextField;
 import org.apache.wicket.model.CompoundPropertyModel;
 import org.apache.wicket.model.Model;
 import org.apache.wicket.request.mapper.parameter.PageParameters;
+import org.apache.wicket.spring.injection.annot.SpringBean;
 import org.apache.wicket.util.string.Strings;
 import org.wicketstuff.annotation.mount.MountPath;
 
 import com.croydon.quick.config.AppProperties;
+import com.croydon.quick.service.EmployeeService;
 
 @MountPath("/signin.html")
 public class SignInPage extends WebPage {
 
 	private static final Logger LOG = Logger.getLogger(SignInPage.class);
 	private static final long serialVersionUID = 1L;
+	
+	@SpringBean
+    private EmployeeService employeeService;
 	
 	private String email;
 	private String password;
@@ -64,24 +69,31 @@ public class SignInPage extends WebPage {
                if (Strings.isEmpty(email) || Strings.isEmpty(password)) {
                   return;
                }
-
-               boolean authResult = AuthenticatedWebSession.get().signIn(email, password);
-               //if authentication succeeds redirect user to the requested page
-               if (authResult) { 
-  					// continueToOriginalDestination();
-  					// Add user to session
-  					getSession().bind();
-  					getSession().setAttribute(AppProperties.CURRENT_USER, email);
-  					getSession().removeAttribute(AppProperties.SIGN_IN_ERROR);
-  					setResponsePage(PlayPage.class);
+               
+               String errorMsg = "";
+               if (employeeService.findByEmail(email) != null) {
+            	   boolean authResult = AuthenticatedWebSession.get().signIn(email, password);
+                   //if authentication succeeds redirect user to the requested page
+                   if (authResult) { 
+      					// continueToOriginalDestination();
+      					// Add user to session
+      					getSession().bind();
+      					getSession().setAttribute(AppProperties.CURRENT_USER, email);
+      					getSession().removeAttribute(AppProperties.SIGN_IN_ERROR);
+      					setResponsePage(PlayPage.class);
+                   } else {
+      					errorMsg = "Your password is incorrect";
+                   }
                } else {
-  					final String errorMsg = "Unable to sign in";
-  					// Add error message to the session
-  					getSession().bind();
-  					getSession().setAttribute(AppProperties.SIGN_IN_ERROR, errorMsg + " (session)");
-  					setResponsePage(SignInPage.class);
-              	 
+            	   errorMsg = "No such email exists in the system";
                }
+               
+				// Add error message to the session
+				getSession().bind();
+				getSession().setAttribute(AppProperties.SIGN_IN_ERROR, errorMsg);
+				setResponsePage(SignInPage.class);
+               
+               
             }
          };
 
