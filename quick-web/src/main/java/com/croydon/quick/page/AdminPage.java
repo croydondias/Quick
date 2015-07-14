@@ -1,5 +1,7 @@
 package com.croydon.quick.page;
 
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 import org.apache.wicket.ajax.AjaxRequestTarget;
@@ -19,6 +21,7 @@ import org.wicketstuff.annotation.mount.MountPath;
 
 import com.croydon.quick.config.AppProperties;
 import com.croydon.quick.domain.Employee;
+import com.croydon.quick.domain.util.EmployeeComparator;
 import com.croydon.quick.page.component.DeleteEmployeeForm;
 import com.croydon.quick.page.component.EmployeeForm;
 import com.croydon.quick.service.EmployeeService;
@@ -35,8 +38,9 @@ public class AdminPage extends WebPage implements AuthenticatedWebPage {
         //add(new BookmarkablePageLink<String>("link", Homepage.class));
     	
         List<Employee> employees = employeeService.findAll();
+        Collections.sort(employees, new EmployeeComparator());
         for (Employee employee : employees) {
-			employee.setPassword(""); // clear all the passwords as we don't want to show it in the UI
+        	employee.setPassword(""); // clear all the passwords as we don't want to show it in the UI
 		}
         
         add(new ListView<Employee>("employeeList", employees) {
