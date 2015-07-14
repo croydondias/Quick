@@ -80,11 +80,17 @@ app.controller('mainCtrl', function($scope, Restangular, $resource, $http) {
 	};
 	$scope.loadAllProjects();
 	
-	$scope.loadTasks = function (p) {
-		$scope.selectedProjectId = p.id;
-		$scope.selectedProjectName = p.name;
+	$scope.loadTasks = function (id) {
+		$scope.selectedProjectId = id;
+		
+		angular.forEach($scope.projects.plain(), function(value, key) {
+		     if (id == value.id) {
+		    	 $scope.selectedProjectName = value.name;
+		     }
+		     
+		});
 
-		$scope.taskService.doGET("/findByProjectId/" + p.id).then(function(response){
+		$scope.taskService.doGET("/findByProjectId/" + id).then(function(response){
 	    	var selectedTasks = response;
 	    	$scope.tasks = selectedTasks;
 	    	var count = 0;

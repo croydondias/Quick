@@ -69,7 +69,7 @@
 					</div>
                 	
                 	<li ng-repeat="project in projects" ng-show="project.category_id == {{category.id}}">
-	                	<a href ng-click="loadTasks(project)">{{ project.name }} <p class="badge" style="display: inline">{{projectTaskCounts[project.id]}}</p></a>
+	                	<a href ng-click="loadTasks(project.id)">{{ project.name }} <p class="badge" style="display: inline">{{projectTaskCounts[project.id]}}</p></a>
 	                </li>
                 </div>
             </ul>
