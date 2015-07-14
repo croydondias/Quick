@@ -19,6 +19,7 @@ import org.wicketstuff.annotation.mount.MountPath;
 
 import com.croydon.quick.config.AppProperties;
 import com.croydon.quick.domain.Employee;
+import com.croydon.quick.page.component.DeleteEmployeeForm;
 import com.croydon.quick.page.component.EmployeeForm;
 import com.croydon.quick.service.EmployeeService;
 
@@ -43,6 +44,14 @@ public class AdminPage extends WebPage implements AuthenticatedWebPage {
         	protected void populateItem(ListItem<Employee> item) {
         		final Employee e = (Employee) item.getModelObject();
         		item.add(new EmployeeForm("employeeForm", 
+                        new CompoundPropertyModel(new LoadableDetachableModel() { 
+                            @Override 
+                            protected Object load() { 
+                                return e; 
+                            } 
+                        }) 
+                ));
+        		item.add(new DeleteEmployeeForm("deleteEmployeeForm", 
                         new CompoundPropertyModel(new LoadableDetachableModel() { 
                             @Override 
                             protected Object load() { 

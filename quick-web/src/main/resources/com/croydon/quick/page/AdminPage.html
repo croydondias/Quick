@@ -32,42 +32,6 @@
     	<!-- Sidebar -->
         <div id="sidebar-wrapper">
             <ul class="sidebar-nav">
-<!--                 <li class="sidebar-brand">
-                    <a href ng-show="!showCategoryInput" ng-click="showCategoryInput = true; addCategoryClick();" style="display: inline">
-                        <i class="fa fa-angle-double-right fa-1x"></i>Add a new category
-                    </a>
-                    
-					<form id="category-formxx" ng-show="showCategoryInput" ng-submit="showCatgeoryInput = false; addCategory();">
-						<input id="new-categoryxx" class="form-control" placeholder="Category name" ng-model="newCategory" ng-disabled="saving" autofocus>
-					</form>
-                </li>
-                
-                <div ng-hide="!showCatgeoryInput" class="popup">
-                	<form id="category-form" ng-submit="showCatgeoryInput = false; addCategory();">
-						<input id="new-category" class="form-control" placeholder="Category name" ng-model="newCategory" ng-disabled="saving" autofocus>
-					</form>
-				</div>
-
-                <div ng-repeat="category in categories">
-                	<li>
-                		<span style="color:bisque; font-size:25px;">
-						<a href ng-click="showProjectInput[category.id] = true" ng-init="showProjectInput[category.id]" style="display: inline">+</a>
-                			{{ category.name}}
-                		</span>
-                	</li>
-                	
-                	<div ng-show="showProjectInput[category.id]" class="popup">
-	                	<form id="project-form" ng-submit="showProjectInput[category.id] = false; addProject(category.id);">
-							<input id="new-project" class="form-control" placeholder="Project name" ng-model="newProject[category.id]" ng-disabled="saving" autofocus>
-						</form>
-					</div>
-                	
-                	<li ng-repeat="project in projects" ng-show="project.category_id == {{category.id}}">
-	                	<a href ng-click="loadTasks(project.id)">{{ project.name }} <p class="badge" style="display: inline">{{projectTaskCounts[project.id]}}</p></a>
-	                </li>
-                </div> -->
-                
-                
                 <li><a href="#">Employee Settings</a></li>
                 <!-- <li><a href="#">Project Settings</a></li>
                 <li><a href="#">Category Settings</a></li> -->
@@ -109,21 +73,26 @@
 							<th>Email</th>
 							<th>Password</th>
 							<th>Save</th>
-							<th>Remove</th>
+							<!-- <th>Remove</th> -->
+							<th>Delete</th>
 						</tr>
 					</thead>
 					<tbody>
 						<div wicket:id="employeeList">
-				            <form wicket:id="employeeForm">
-				            	<tr>
+				            <tr>
+				            	<form wicket:id="employeeForm">
+				            	
 					                <td><input required wicket:id="firstName" type="text"/></td>
 					                <td><input required wicket:id="lastName" type="text"/></td>
 					                <td><span wicket:id="email">[email]</span></td>
 					                <td><input required wicket:id="password" type="password"/></td>
 					                <td><input wicket:id="save" type="submit" value="Save" class="btn btn-primary"/></td>
-					                <td><input wicket:id="remove" type="button" value="Remove" class="btn btn-danger"/></td>
-				                </tr>
-				            </form>
+					                <!-- <td><input wicket:id="remove" type="submit" value="Remove" class="btn btn-danger"/></td> -->
+				            	</form>
+				            	<form wicket:id="deleteEmployeeForm">
+				            		<td><input wicket:id="delete" type="submit" value="Delete" class="btn btn-danger"/></td>
+				            	</form>
+				            </tr>
 				        </div>
 					</tbody>
 				</table>

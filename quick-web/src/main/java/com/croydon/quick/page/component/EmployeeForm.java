@@ -36,6 +36,7 @@ public class EmployeeForm extends StatelessForm {
         Label email = new Label("email");
         add(email);
         PasswordTextField password = new PasswordTextField("password");
+        //TextField password = new TextField("password");
         add(password);
         
         Employee employee = (Employee)model.getObject();
@@ -54,20 +55,20 @@ public class EmployeeForm extends StatelessForm {
 	            } 
         });
         
-        Button removeButton = new Button("remove") { 
-            @Override 
-            public void onSubmit() { 
-            	LOG.info("REMOVE clicked");
-            	Employee selected = (Employee) getForm().getModelObject();
-            	employeeService.delete(selected.getId());
-                setResponsePage(AdminPage.class); 
-            } 
-        };
-        if (matchesCurrentUser) {
-        	// Disable the remove button when the current user matches the employee item
-        	removeButton.add(AttributeModifier.replace("disabled", "disabled"));
-        }
-        add(removeButton); 
+//        Button removeButton = new Button("remove") { 
+//            @Override 
+//            public void onSubmit() { 
+//            	LOG.info("REMOVE clicked");
+//            	Employee selected = (Employee) getForm().getModelObject();
+//            	employeeService.delete(selected.getId());
+//                setResponsePage(AdminPage.class); 
+//            } 
+//        };
+//        if (matchesCurrentUser) {
+//        	// Disable the remove button when the current user matches the employee item
+//        	removeButton.add(AttributeModifier.replace("disabled", "disabled"));
+//        }
+//        add(removeButton); 
 	}
 	
 	private void updateEmployeeInDatabase(Employee editedEmployee) {
