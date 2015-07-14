@@ -70,30 +70,17 @@ public class SignInPage extends WebPage {
                   return;
                }
                
-               String errorMsg = "";
                if (employeeService.findByEmail(email) != null) {
             	   boolean authResult = AuthenticatedWebSession.get().signIn(email, password);
                    //if authentication succeeds redirect user to the requested page
                    if (authResult) { 
-      					// continueToOriginalDestination();
-      					// Add user to session
-      					getSession().bind();
-      					getSession().setAttribute(AppProperties.CURRENT_USER, email);
-      					getSession().removeAttribute(AppProperties.SIGN_IN_ERROR);
-      					setResponsePage(PlayPage.class);
+      					loginSuccess();
                    } else {
-      					errorMsg = "Your password is incorrect";
+      					loginError("Your password is incorrect");
                    }
                } else {
-            	   errorMsg = "No such email exists in the system";
+            	   loginError("No such email exists in the system");
                }
-               
-				// Add error message to the session
-				getSession().bind();
-				getSession().setAttribute(AppProperties.SIGN_IN_ERROR, errorMsg);
-				setResponsePage(SignInPage.class);
-               
-               
             }
          };
 
@@ -103,4 +90,19 @@ public class SignInPage extends WebPage {
          form.add(new PasswordTextField("password"));
          return form;
     }
+    
+	private void loginSuccess() {
+		// Add user to session
+		getSession().bind();
+		getSession().setAttribute(AppProperties.CURRENT_USER, email);
+		getSession().removeAttribute(AppProperties.SIGN_IN_ERROR);
+		setResponsePage(PlayPage.class);
+	}
+	
+	private void loginError(String errorMsg) {
+		// Add error message to the session
+		getSession().bind();
+		getSession().setAttribute(AppProperties.SIGN_IN_ERROR, errorMsg);
+		setResponsePage(SignInPage.class);
+	}
 }
