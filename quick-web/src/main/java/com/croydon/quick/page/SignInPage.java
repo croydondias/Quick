@@ -92,7 +92,7 @@ public class SignInPage extends WebPage {
     }
     
 	private void loginSuccess() {
-		// Add user to session
+		// Add user email to session
 		getSession().bind();
 		getSession().setAttribute(AppProperties.CURRENT_USER, email);
 		getSession().removeAttribute(AppProperties.SIGN_IN_ERROR);
