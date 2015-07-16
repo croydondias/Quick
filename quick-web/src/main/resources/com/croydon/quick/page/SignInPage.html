@@ -62,8 +62,7 @@
 						<div wicket:id="loginStatus"></div>
 					</center>
 
-						<!-- <form id="signin-form" class="form-horizontal" action="" wicket:id="signinForm"> -->
-                  <form id="signin-formx" class="form-horizontal" method="get" wicket:id="signinForm">
+					<form id="signin-form" class="form-horizontal" method="get" wicket:id="signinForm">
 	                  <div class="row">
 	                  	<center class="col-lg-offset-3">
 	                    <div class="col-lg-8">
@@ -112,33 +111,6 @@
 
     <!-- Custom Theme JavaScript -->
     <script src="js/grayscale.js"></script>
-	
-	<script type="text/javascript">
-	    var frm = $('#signin-form');
-	    frm.submit(function (ev) {
-	        $.ajax({
-	            type: frm.attr('method'),
-	            url: frm.attr('action'),
-	            data: frm.serialize(),
-	            error: function (jqXHR, textStatus, errorMessage) {
-	            	console.log('login failure: ' + jqXHR.responseText);
-	            	if (jqXHR.status === 401) { // HTTP Status 401: Unauthorized
-	            		console.log('401 error');
-	            		alert('Incorrect email / password');
-			 
-					} else {
-						alert('There was a problem with your registration. Please try again.');
-					}
-	            },
-	            success: function (data) {
-	            	console.log('Success logging in');
-	            	window.location = '/play.html';
-	            }
-	        });
-	
-	        ev.preventDefault();
-	    });
-	</script>
 
 </body>
 
